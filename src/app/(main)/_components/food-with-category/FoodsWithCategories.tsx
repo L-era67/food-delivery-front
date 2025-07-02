@@ -3,14 +3,15 @@
 import { FoodCard } from "@/components/food";
 import { categories } from "./FoodCategories";
 import { useEffect, useState } from "react";
+import { OrderSheetCart } from "../order-sheet";
 
-type foodWithCategories = {
+export type foodWithCategories = {
   _id: string;
   foodName: string;
   price: number;
   image: string;
   ingredients: string;
-  // categoryId: categories,
+  categoryId: categories,
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -74,6 +75,8 @@ export const FoodsWithCategories = () => {
 
     getFoodWithCategories();
   }, []);
+  // console.log("jjjj", foodWithCategories[0].foods);
+  // return null;
 
   if (!foodWithCategories?.length) return null;
 
@@ -93,12 +96,15 @@ export const FoodsWithCategories = () => {
               return (
                 <div key={food?._id}>
                   <FoodCard
+                    food={food}
                     foodName={food?.foodName}
                     price={food?.price}
                     image={food?.image}
                     ingredients={food?.ingredients}
                     _id={food?._id}
                   />
+
+                  {/* <OrderSheetCart food={food}/> */}
                 </div>
               );
             })}

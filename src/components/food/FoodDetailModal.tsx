@@ -12,9 +12,10 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { useState } from "react";
+import { foodWithCategories } from "@/app/(main)/_components/food-with-category/FoodsWithCategories";
 
 type FoodDetailModalProps = {
-  food: never;
+  food: foodWithCategories;
   isModalOpen: boolean;
   onToggleModal: () => void;
 };
@@ -80,7 +81,7 @@ export const FoodDetailModal = ({
                     Total price:
                   </p>
                   <div className="text-lg font-semibold text-[#09090B]">
-                    <p>${price}</p>
+                    <p>₮{price}</p>
                   </div>
                 </div>
                 <div className="flex w-[121px] justify-around">

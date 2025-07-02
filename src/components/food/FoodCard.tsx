@@ -7,6 +7,7 @@ import { MouseEventHandler, useState } from "react";
 import { Button } from "../ui/button";
 import { AddToCartAlert } from "./AddToCartAlert";
 import { FoodDetailModal } from "./FoodDetailModal";
+import { foodWithCategories } from "@/app/(main)/_components/food-with-category/FoodsWithCategories";
 
 type FoodCardProps = {
   foodName: string;
@@ -14,21 +15,24 @@ type FoodCardProps = {
   ingredients: string;
   image: string;
   _id: string;
+  food: foodWithCategories
 };
 
 export const FoodCard = ({
   foodName,
-
+  price,
   ingredients,
   image,
+  food
 }: FoodCardProps) => {
-  const food = {
-    _id: "1",
-    foodName: "foodName",
-    price: 1200,
-    image: "",
-    ingredients: "ingredients ingredients",
-  };
+
+  // const food = {
+  //   _id: "1",
+  //   foodName: "foodName",
+  //   price: 1200,
+  //   image: "",
+  //   ingredients: "ingredients ingredients",
+  // };
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [showAlert, setShowAlert] = useState<boolean>(false);
@@ -61,9 +65,9 @@ export const FoodCard = ({
           </div>
 
           <div className="w-full">
-            <div className="flex justify-between">
+            <div className="flex justify-between gap-2">
               <p className="text-2xl font-semibold text-red-500">{foodName}</p>
-              <p className="text-lg font-semibold text-[#09090B]">12 ₮</p>
+              <p className="text-lg font-semibold text-[#09090B]">{price}₮</p>
             </div>
 
             <div className="mt-2 text-sm text-[#09090B] font-normal">
