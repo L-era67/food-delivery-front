@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { CircleX, Minus, Plus } from "lucide-react";
 import Image from "next/image";
 
+// type OrderSheetFoodItematyoe = {
+//   food:
+// }
+
 export const OrderSheetFoodItem = ({ food, quantity }) => {
   return (
     <>

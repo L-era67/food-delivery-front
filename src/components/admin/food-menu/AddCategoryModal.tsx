@@ -10,14 +10,40 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export const AddCategoryModal = () => {
   const [categoryName, setCategoryName] = useState<string>("");
 
   const createCategoryName = async () => {
     setCategoryName("");
+    try {
+      const responses = await fetch("http://localhost:3000/category", {
+        method: "POST",
+        body: JSON.stringify({ categoryName: categoryName }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
+      const data = await responses.json();
+
+      toast.success("created successfully!");
+      console.log("data RESPONSE:", data.response.categoryName);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  // useEffect(() => {
+  //   const getCategories = async () => {
+
+  //   };
+
+  //   console.log("INPUT VALUE", categoryName);
+  //   getCategories();
+  // }, []);
 
   return (
     <Dialog>

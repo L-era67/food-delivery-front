@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { AddCategoryModal } from "./AddCategoryModal";
 import { DishesCategorySkeleton } from "./DishesCategorySkeleton";
 
@@ -13,7 +14,26 @@ const categories = [
     count: 2,
   },
 ];
+
 export const DishesCategory = () => {
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    
+    const getCategories = async () => {
+      const response = await fetch("http://localhost:3000/food/getFoodsWithCategories");
+      const data = await response.json();
+      console.log("DATA:", data);
+
+
+      setCategories(data.response);
+    };
+
+    console.log("log:", categories);
+    getCategories();
+  }, []);
+
+
   if (!categories) return null;
 
   if (!categories.length) return <DishesCategorySkeleton />;

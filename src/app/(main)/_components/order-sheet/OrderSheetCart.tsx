@@ -5,7 +5,8 @@ import { foodWithCategories } from "../food-with-category/FoodsWithCategories";
 import { useEffect, useState } from "react";
 
 type cartDataType = {
-  food:foodWithCategories
+  food:foodWithCategories;
+  quantity:number;
 }
 
 // export const cartData = [
@@ -32,18 +33,19 @@ export const OrderSheetCart = ()=> {
 
   const [cartData, setCartData] =useState<cartDataType[]>([]);
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    const getCartData = async() =>{
-      const response = await fetch("http://localhost:3000/food-order");
-      const data  =await response.json();
-      console.log("CART DATA:", data);
+  //   const getCartData = async() =>{
+  //     const response = await fetch("http://localhost:3000/food-order");
+  //     const data  =await response.json();
+  //     console.log("CART DATA:", data);
       
-      setCartData(data?.response);
-    }
+  //     setCartData(data?.response);
+  //   }
 
-    getCartData();
-  },[])
+  //   getCartData();
+  // },[])
+  // return null
 
   const renderFoodCard = () => {
     if (cartData?.length) {
