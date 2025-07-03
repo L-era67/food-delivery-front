@@ -1,13 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OrderSheetEmptyCard } from "./OrderSheetEmptyCard";
 import { OrderSheetFoodItem } from "./OrderSheetFoodItem";
-import { foodWithCategories } from "../food-with-category/FoodsWithCategories";
+
 import { useEffect, useState } from "react";
+import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
 
 type cartDataType = {
-  food:foodWithCategories;
-  quantity:number;
-}
+  food: foodWithCategories;
+  quantity: number;
+};
 
 // export const cartData = [
 //   {
@@ -28,10 +29,8 @@ type cartDataType = {
 //   },
 // ];
 
-
-export const OrderSheetCart = ()=> {
-
-  const [cartData, setCartData] =useState<cartDataType[]>([]);
+export const OrderSheetCart = () => {
+  const [cartData, setCartData] = useState<cartDataType[]>([]);
 
   // useEffect(()=>{
 
@@ -39,7 +38,7 @@ export const OrderSheetCart = ()=> {
   //     const response = await fetch("http://localhost:3000/food-order");
   //     const data  =await response.json();
   //     console.log("CART DATA:", data);
-      
+
   //     setCartData(data?.response);
   //   }
 
@@ -51,16 +50,15 @@ export const OrderSheetCart = ()=> {
     if (cartData?.length) {
       return cartData?.map((item) => {
         console.log("item Cart", item);
-        
+
         return (
           <OrderSheetFoodItem
             key={item.food._id}
             food={item.food}
-             quantity={item.quantity}
+            quantity={item.quantity}
             // quantity={item?.foodOrderItems?.quantity}
             //  key={item?foodOrderItems?.food._id}
             // food={item?.foodOrderItems?.food}
-           
           />
         );
       });

@@ -1,18 +1,19 @@
+import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
 import { Pencil } from "lucide-react";
 
 type AdminFoodCardProps = {
-  image: string;
-  foodName: string;
-  ingredients: string;
-  price: number;
+  food: foodWithCategories;
 };
 
 export const AdminFoodCard = ({
-  image,
-  foodName,
-  ingredients,
-  price,
+  // image,
+  // foodName,
+  // ingredients,
+  // price,
+  food,
 }: AdminFoodCardProps) => {
+  const { image, foodName, ingredients, price } = food;
+
   return (
     <div className="border rounded-[20px] p-4 border-border bg-background bg-blue-30 flex flex-col gap-5 min-w-full">
       <div
@@ -29,7 +30,7 @@ export const AdminFoodCard = ({
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <p className="text-[#EF4444] text-sm font-medium">{foodName}</p>
-          <p className="text-xs">₮{price}</p>
+          <p className="text-xs">{price}₮</p>
         </div>
         <p className="text-xs">{ingredients}</p>
       </div>

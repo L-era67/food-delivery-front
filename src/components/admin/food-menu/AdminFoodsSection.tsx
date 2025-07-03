@@ -1,26 +1,45 @@
 "use client";
 
-import { foodWithCategories } from "@/app/(main)/_components/food-with-category/FoodsWithCategories";
+import { useEffect, useState } from "react";
+// import { foodWithCategories } from "@/app/(main)/_components/food-with-category/FoodsWithCategories";
 import { AddFoodModal } from "./AddFoodModal";
 import { AdminFoodCard } from "./AdminFoodCard";
 import { AdminFoodSkeleton } from "./AdminFoodSkeleton";
+import { fetchFoodWithCategories } from "@/lib/api/api-foodcategory";
+import { CategoryIdWithFoods } from "@/lib/types/Types-Categories-Food";
 
-export type FoodCategory = {
-  _id: string;
-  categoryName: string;
-  count: number;
-  foods: {
-    _id: string;
-    foodName: string;
-    price: number;
-    image: string;
-    ingredients: string;
-    createdAt?: string;
-    updatedAt?: string;
-  }[];
-};
+// export type FoodCategory = {
+//   _id: string;
+//   categoryName: string;
+//   count: number;
+//   foods: {
+//     _id: string;
+//     foodName: string;
+//     price: number;
+//     image: string;
+//     ingredients: string;
+//     createdAt?: string;
+//     updatedAt?: string;
+//   }[];
+// };
 
 export const AdminFoodsSection = () => {
+  const [foodWithCategories, setFoodWithCategories] = useState<CategoryIdWithFoods[]>(
+    []
+  );
+
+  useEffect(() => {
+    const getAdminFoods = async () => {
+
+      const data = await fetchFoodWithCategories();
+      setFoodWithCategories(data.response);
+      console.log("admin cat:", data.response);
+
+    };
+
+    getAdminFoods();
+  }, []);
+
   if (!foodWithCategories) return null;
 
   if (!foodWithCategories.length) return <AdminFoodSkeleton />;
@@ -45,10 +64,11 @@ export const AdminFoodsSection = () => {
             {category.foods.map((food) => (
               <div key={`${food._id}`} className="flex gap-2">
                 <AdminFoodCard
-                  image={food.image}
-                  price={food.price}
-                  ingredients={food.ingredients}
-                  foodName={food.foodName}
+                  // image={food.image}
+                  // price={food.price}
+                  // ingredients={food.ingredients}
+                  // foodName={food.foodName}
+                  food = {food}
                 />
               </div>
             ))}

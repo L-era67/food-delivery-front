@@ -1,27 +1,11 @@
 "use client";
 
 import { FoodCard } from "@/components/food";
-import { categories } from "./FoodCategories";
 import { useEffect, useState } from "react";
 import { OrderSheetCart } from "../order-sheet";
+import { fetchFoodWithCategories } from "@/lib/api/api-foodcategory";
+import { CategoryIdWithFoods } from "@/lib/types/Types-Categories-Food";
 
-export type foodWithCategories = {
-  _id: string;
-  foodName: string;
-  price: number;
-  image: string;
-  ingredients: string;
-  categoryId: categories,
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-};
-
-type FoodCategory = {
-  _id: string;
-  categoryName: string;
-  foods: foodWithCategories[];
-};
 // export const foodWithCategories = [
 //   {
 //     _id: "1",
@@ -58,25 +42,18 @@ type FoodCategory = {
 // ];
 
 export const FoodsWithCategories = () => {
-  const [foodWithCategories, setFoodWithCategories] = useState<FoodCategory[]>(
-    []
-  );
+  const [foodWithCategories, setFoodWithCategories] = useState<
+    CategoryIdWithFoods[]
+  >([]);
 
   useEffect(() => {
     const getFoodWithCategories = async () => {
-      const response = await fetch(
-        "http://localhost:3000/food/getFoodsWithCategories"
-      );
-      const data = await response.json();
-      console.log("food DATA:", data);
-
+      const data = await fetchFoodWithCategories();
       setFoodWithCategories(data.response);
     };
 
     getFoodWithCategories();
   }, []);
-  // console.log("jjjj", foodWithCategories[0].foods);
-  // return null;
 
   if (!foodWithCategories?.length) return null;
 
@@ -95,14 +72,7 @@ export const FoodsWithCategories = () => {
             {category?.foods.map((food) => {
               return (
                 <div key={food?._id}>
-                  <FoodCard
-                    food={food}
-                    foodName={food?.foodName}
-                    price={food?.price}
-                    image={food?.image}
-                    ingredients={food?.ingredients}
-                    _id={food?._id}
-                  />
+                  <FoodCard food={food} />
 
                   {/* <OrderSheetCart food={food}/> */}
                 </div>

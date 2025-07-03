@@ -12,38 +12,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { fetchCategoriesPost } from "@/lib/api/api-foodcategory";
 
 export const AddCategoryModal = () => {
   const [categoryName, setCategoryName] = useState<string>("");
 
   const createCategoryName = async () => {
-    setCategoryName("");
+    if (!categoryName.trim()) {
+      toast.error("Та ангиллынхаа нэрийг оруулна уу!");
+      return;
+    }
+    
     try {
-      const responses = await fetch("http://localhost:3000/category", {
-        method: "POST",
-        body: JSON.stringify({ categoryName: categoryName }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-
+      const responses = await fetchCategoriesPost(categoryName);
       const data = await responses.json();
+      console.log("log", data);
 
-      toast.success("created successfully!");
-      console.log("data RESPONSE:", data.response.categoryName);
+      if (!responses.ok) {
+        toast.error("ERROR!");
+        return;
+      }
+
+      toast.success(
+        `Category ${data.response.categoryName} created successfully`
+      );
+      console.log("category Data:", data.response.categoryName);
+
+      setCategoryName("");
     } catch (error) {
-      console.log(error);
+      console.error("Error creating category:", error);
+      toast.error(`Failed to create category`);
     }
   };
-
-  // useEffect(() => {
-  //   const getCategories = async () => {
-
-  //   };
-
-  //   console.log("INPUT VALUE", categoryName);
-  //   getCategories();
-  // }, []);
 
   return (
     <Dialog>

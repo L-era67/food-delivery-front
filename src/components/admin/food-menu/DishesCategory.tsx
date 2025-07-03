@@ -3,36 +3,29 @@
 import { useEffect, useState } from "react";
 import { AddCategoryModal } from "./AddCategoryModal";
 import { DishesCategorySkeleton } from "./DishesCategorySkeleton";
-
-export type CategoryWithCount = {
-  categoryName: string;
-  count: number;
-};
-const categories = [
-  {
-    categoryName: "categoryName1",
-    count: 2,
-  },
-];
+import {
+  fetchCategories,
+  fetchFoodWithCategories,
+} from "@/lib/api/api-foodcategory";
+import { CategoryIdWithFoods } from "@/lib/types/Types-Categories-Food";
 
 export const DishesCategory = () => {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState<CategoryIdWithFoods[]>([]);
+
+  const getCategories = async () => {
+    const response = await fetch("http://localhost:3000/category");
+    const data = await response.json();
+    console.log("GET CATEGORIES:", data);
+    setCategories(data.response);
+    return data;
+  };
+
+  console.log("<--DISHES-CATEGORIES-->", categories);
 
   useEffect(() => {
-    
-    const getCategories = async () => {
-      const response = await fetch("http://localhost:3000/food/getFoodsWithCategories");
-      const data = await response.json();
-      console.log("DATA:", data);
-
-
-      setCategories(data.response);
-    };
-
-    console.log("log:", categories);
+    // if (!categories) return;
     getCategories();
   }, []);
-
 
   if (!categories) return null;
 
@@ -53,6 +46,7 @@ export const DishesCategory = () => {
             {allDishesCount}
           </p>
         </div>
+
         {categories?.map((category, index) => (
           <div key={index} className="flex gap-2 px-4 py-2 border rounded-full">
             <p className="text-sm font-medium">{category?.categoryName}</p>
@@ -61,6 +55,7 @@ export const DishesCategory = () => {
             </p>
           </div>
         ))}
+
         <AddCategoryModal />
       </div>
     </div>
