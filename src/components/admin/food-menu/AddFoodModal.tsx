@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChangeEvent, useState } from "react";
 import { ImageUploader } from "./ImageUploader";
+import { toast } from "sonner";
+import { database } from "@/lib/utils/database";
 
 type AddFoodModalProps = {
   categoryName: string;
@@ -20,45 +22,71 @@ type AddFoodModalProps = {
 
 type FoodInfo = {
   foodName: string;
-  price: string;
+  price: number;
   image: string;
   ingredients: string;
-  category: string;
+  categoryId: string;
 };
 
 export const AddFoodModal = ({
   categoryName,
   categoryId,
 }: AddFoodModalProps) => {
+
   const [uploadedImage, setUploadedImage] = useState<File>();
 
   const [foodInfo, setFoodInfo] = useState<FoodInfo>({
     foodName: "",
-    price: "",
-    image: "",
+    price: 0,
+    image:
+      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: "",
-    category: categoryId,
+    categoryId: categoryId,
   });
+
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-
+    console.log(name, value);
+    
     setFoodInfo((prevFoodInfo) => ({
       ...prevFoodInfo,
       [name]: value,
     }));
+
   };
 
   const handleCreateFood = async () => {
-    setFoodInfo({
-      foodName: "",
-      price: "",
-      image: "",
-      ingredients: "",
-      category: categoryId,
-    });
+
+    try {
+
+      console.log("foodNAME:", foodInfo);
+
+      const { foodName, price, image, ingredients, categoryId } = foodInfo;
+
+      const response = await database("food", "POST", {foodName, price, image,ingredients, categoryId})
+
+      const data = await response.json();
+      console.log("data:", data);
+
+      if (!response.ok) {
+        toast.error("ERROR!");
+      } else {
+        toast.success("Created successfully!");
+      }
+
+      setFoodInfo({
+        foodName: "",
+        price: 0,
+        image: "",
+        ingredients: "",
+        categoryId: categoryId,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {

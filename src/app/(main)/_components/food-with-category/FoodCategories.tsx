@@ -3,32 +3,33 @@
 import { useState, useEffect } from "react";
 
 import { FoodsWithCategories } from "./FoodsWithCategories";
-
-export type categories = {
-  _id: string;
-  categoryName: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-};
-
+import { categories } from "@/lib/types/Types-Categories-Food";
+import { database } from "@/lib/utils/database";
 
 export const FoodCategories = () => {
-
   const [categories, setCategories] = useState<categories[]>([]);
 
+  // useEffect(() => {
+  //   const getCategories = async () => {
+  //     const data = await fetchCategories();
+  //     console.log("<--CATEGORIES-->", data.response);
+  //     setCategories(data.response);
+  //   };
+
+  //   getCategories();
+  // }, []);
+
   useEffect(() => {
-    
     const getCategories = async () => {
-      const response = await fetch("http://localhost:3000/category");
+      const response = await database("category");
+
       const data = await response.json();
-      console.log("DATA:", data);
+
+      console.log("<--CATEGORIES-->", data.response);
+
       setCategories(data.response);
     };
 
-    console.log("log:", categories);
-
-    if(!categories) return;
     getCategories();
   }, []);
 
@@ -41,7 +42,7 @@ export const FoodCategories = () => {
         <div className="text-3xl font-semibold text-white">Categories</div>
         <div className="flex gap-2 flex-nowrap">
           {categories?.map((category) => {
-            console.log("data:", category.categoryName);
+            console.log("<--CATEGORY ITEM-->", category.categoryName);
             return (
               <div
                 key={category._id}

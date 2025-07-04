@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { useState } from "react";
-import { foodWithCategories } from "@/app/(main)/_components/food-with-category/FoodsWithCategories";
+import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
 
 type FoodDetailModalProps = {
   food: foodWithCategories;
@@ -39,7 +39,7 @@ export const FoodDetailModal = ({
   const handleAddToCart = () => {
     setQuantity(1);
     onToggleModal();
-  };
+  }; //ADD CARD DEER X TOWCHAJILJ (onToggleModal) hariu butsaad quantity-g 1-s ehluulne
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onToggleModal}>
@@ -81,7 +81,7 @@ export const FoodDetailModal = ({
                     Total price:
                   </p>
                   <div className="text-lg font-semibold text-[#09090B]">
-                    <p>₮{price}</p>
+                    <p>{price}₮</p>
                   </div>
                 </div>
                 <div className="flex w-[121px] justify-around">
