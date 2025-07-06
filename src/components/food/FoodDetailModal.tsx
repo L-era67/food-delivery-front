@@ -39,7 +39,7 @@ export const FoodDetailModal = ({
   const handleAddToCart = () => {
     setQuantity(1);
     onToggleModal();
-  }; //ADD CARD DEER X TOWCHAJILJ (onToggleModal) hariu butsaad quantity-g 1-s ehluulne
+  }; //ADD CARD DEER darsnaar (onToggleModal) & hariu butsaad quantity-g 1-s ehluulne Harin "X" btn quatity uurchluhgui
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onToggleModal}>

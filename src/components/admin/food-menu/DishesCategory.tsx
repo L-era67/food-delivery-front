@@ -16,10 +16,8 @@ export const DishesCategory = () => {
     console.log("GET CATEGORIES:", data);
 
     setCategories(data.response);
-
     return data;
   };
-
   console.log("<--DISHES-CATEGORIES-->", categories);
 
   useEffect(() => {
@@ -37,7 +35,9 @@ export const DishesCategory = () => {
 
   return (
     <div className="flex flex-col gap-4 p-6 bg-background rounded-xl">
+      
       <p className="text-xl font-semibold">Dishes category</p>
+
       <div className="flex flex-wrap gap-3">
         <div className="flex gap-2 px-4 py-2 border rounded-full">
           <p className="text-sm font-medium">All dishes</p>

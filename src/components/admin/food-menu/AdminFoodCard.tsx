@@ -1,5 +1,7 @@
 import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
 import { Pencil } from "lucide-react";
+import { useState } from "react";
+import { UpdateFoodModal } from "./UpdateFoodModal";
 
 type AdminFoodCardProps = {
   food: foodWithCategories;
@@ -14,6 +16,16 @@ export const AdminFoodCard = ({
 }: AdminFoodCardProps) => {
   const { image, foodName, ingredients, price } = food;
 
+  const [isUpdateModalOpen, setIsUpdateModelOpen] = useState<boolean>(false);
+
+  const handleUpdateToFood = () => {
+    setIsUpdateModelOpen(true);
+  };
+
+  const onToggleModal = () => {
+    setIsUpdateModelOpen(!isUpdateModalOpen);
+  };
+
   return (
     <div className="border rounded-[20px] p-4 border-border bg-background bg-blue-30 flex flex-col gap-5 min-w-full">
       <div
@@ -22,9 +34,13 @@ export const AdminFoodCard = ({
           backgroundImage: `url(${image})`,
         }}
       >
-        <button className="flex justify-center items-center rounded-full bg-background h-11 w-11">
-          <Pencil color="#EF4444" />
-        </button>
+        <div onClick={handleUpdateToFood}>
+          <UpdateFoodModal
+            foodItem={food}
+            // onToggleModal={onToggleModal}
+            // isUpdateModalOpen={isUpdateModalOpen}
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">

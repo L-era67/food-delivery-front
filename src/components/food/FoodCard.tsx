@@ -23,8 +23,8 @@ export const FoodCard = ({ food }: FoodCardType) => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
-    console.log(event);
+  const handleAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {  //(event :React.MouseEvent<HTMLButtonElement>)=>{}
+    console.log("foodCard-EVENT:",event);
     setShowAlert(true);
   };
 

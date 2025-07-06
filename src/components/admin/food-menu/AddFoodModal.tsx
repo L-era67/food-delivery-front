@@ -20,7 +20,7 @@ type AddFoodModalProps = {
   categoryId: string;
 };
 
-type FoodInfo = {
+export type FoodInfo = {
   foodName: string;
   price: number;
   image: string;
@@ -38,8 +38,9 @@ export const AddFoodModal = ({
   const [foodInfo, setFoodInfo] = useState<FoodInfo>({
     foodName: "",
     price: 0,
-    image:
-      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image:"https://plus.unsplash.com/premium_photo-1677000666741-17c3c57139a2?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // image:
+    //   "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: "",
     categoryId: categoryId,
   });
@@ -94,6 +95,9 @@ export const AddFoodModal = ({
     setUploadedImage(event.target.files[0]);
   };
 
+  console.log("image value", uploadedImage);
+  
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -106,7 +110,8 @@ export const AddFoodModal = ({
           </p>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] flex flex-col gap-6">
+      <DialogContent className="sm:max-w-[425px] flex flex-col gap-4">
+
         <div className="flex items-center justify-between mb-4">
           <DialogTitle>Add new Dish to {categoryName}</DialogTitle>
           <DialogClose asChild>
@@ -119,6 +124,8 @@ export const AddFoodModal = ({
             </Button>
           </DialogClose>
         </div>
+
+
         <div className="flex w-full gap-6">
           <div className="flex flex-col w-1/2 gap-2">
             <Label htmlFor="foodName" className="ml-1 font-semibold">
@@ -131,6 +138,7 @@ export const AddFoodModal = ({
               onChange={handleInputChange}
             />
           </div>
+
           <div className="flex flex-col w-1/2 gap-2">
             <Label htmlFor="price" className="font-semibold">
               Food price
@@ -143,7 +151,9 @@ export const AddFoodModal = ({
               onChange={handleInputChange}
             />
           </div>
+
         </div>
+
         <div className="flex flex-col gap-2">
           <Label htmlFor="ingredients" className="font-semibold">
             Ingredients
@@ -155,6 +165,7 @@ export const AddFoodModal = ({
             onChange={handleInputChange}
           />
         </div>
+        
         <div className="flex flex-col gap-2">
           <Label htmlFor="image" className="font-semibold">
             Food image
@@ -162,6 +173,7 @@ export const AddFoodModal = ({
 
           <ImageUploader onFileChange={onFileChange} imgFile={uploadedImage} />
         </div>
+
         <DialogFooter>
           <DialogClose asChild>
             <Button type="button" className="mt-4" onClick={handleCreateFood}>
