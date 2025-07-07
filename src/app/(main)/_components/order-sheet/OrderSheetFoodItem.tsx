@@ -1,14 +1,33 @@
 import { SidebarDashLine } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
 
 import { CircleX, Minus, Plus } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
-// type OrderSheetFoodItematyoe = {
-//   food:
-// }
+type OrderSheetFoodItematype = {
+  food: foodWithCategories;
+  quantity: number;
+};
 
-export const OrderSheetFoodItem = ({ food, quantity }) => {
+export const OrderSheetFoodItem = ({
+  food,
+  quantity,
+}: OrderSheetFoodItematype) => {
+  const [changeQuantity, setChangeQuantity] = useState<number>(quantity);
+
+  const addQuantity = () => {
+    setChangeQuantity((prev) => prev + 1);
+  };
+  const subtractQuantity = () => {
+    setChangeQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+
+
+
+  const totalPrice = food?.price * changeQuantity;
+
   return (
     <>
       <div className="flex gap-3">
@@ -40,18 +59,18 @@ export const OrderSheetFoodItem = ({ food, quantity }) => {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <Button variant="ghost">
+              <Button variant="ghost" onClick={subtractQuantity}>
                 <Minus />
               </Button>
 
-              <div className="text-lg font-semibold">{quantity}</div>
+              <div className="text-lg font-semibold">{changeQuantity}</div>
 
-              <Button variant="ghost">
+              <Button variant="ghost" onClick={addQuantity}>
                 <Plus />
               </Button>
             </div>
 
-            <h4 className="font-bold">12₮</h4>
+            <h4 className="font-bold">{totalPrice}</h4>
           </div>
         </div>
       </div>

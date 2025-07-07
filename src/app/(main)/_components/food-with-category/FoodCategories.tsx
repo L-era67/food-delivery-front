@@ -25,7 +25,6 @@ export const FoodCategories = () => {
 
       const data = await response.json();
 
-      console.log("<--CATEGORIES-->", data.response);
 
       setCategories(data.response);
     };
@@ -42,7 +41,7 @@ export const FoodCategories = () => {
         <div className="text-3xl font-semibold text-white">Categories</div>
         <div className="flex gap-2 flex-nowrap">
           {categories?.map((category) => {
-            console.log("<--CATEGORY ITEM-->", category.categoryName);
+            // console.log("<--CATEGORY ITEM-->", category.categoryName);
             return (
               <div
                 key={category._id}

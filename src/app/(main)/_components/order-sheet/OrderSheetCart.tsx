@@ -2,8 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OrderSheetEmptyCard } from "./OrderSheetEmptyCard";
 import { OrderSheetFoodItem } from "./OrderSheetFoodItem";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
+import { foodCartContext } from "@/providers/FoodCart";
 
 type cartDataType = {
   food: foodWithCategories;
@@ -30,32 +31,23 @@ type cartDataType = {
 // ];
 
 export const OrderSheetCart = () => {
-  const [cartData, setCartData] = useState<cartDataType[]>([]);
+  // const [cartData, setCartData] = useState<cartDataType[]>([]);
 
-  // useEffect(()=>{
+  const { foodCart } = useContext(foodCartContext);
+  console.log("foodcart:", foodCart);
 
-  //   const getCartData = async() =>{
-  //     const response = await fetch("http://localhost:3000/food-order");
-  //     const data  =await response.json();
-  //     console.log("CART DATA:", data);
-
-  //     setCartData(data?.response);
-  //   }
-
-  //   getCartData();
-  // },[])
-  // return null
+  // setCartData(foodCartText?.foodCart);
 
   const renderFoodCard = () => {
-    if (cartData?.length) {
-      return cartData?.map((item) => {
+    if (foodCart?.length) {
+      return foodCart?.map((item) => {
         console.log("item Cart", item);
 
         return (
           <OrderSheetFoodItem
             key={item.food._id}
             food={item.food}
-            quantity={item.quantity}
+            quantity={item?.quatity}
             // quantity={item?.foodOrderItems?.quantity}
             //  key={item?foodOrderItems?.food._id}
             // food={item?.foodOrderItems?.food}

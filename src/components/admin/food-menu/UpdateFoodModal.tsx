@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
+import { categories, foodWithCategories } from "@/lib/types/Types-Categories-Food";
 import { database } from "@/lib/utils/database";
 import { Pencil, Trash, X } from "lucide-react";
 import { ChangeEvent, useState } from "react";
@@ -24,6 +24,13 @@ type UpdateFoodModalType = {
   //   onToggleModal: () => void;
   //   isUpdateModalOpen: boolean;
 };
+type FoodFormFields = {
+  foodName: string;
+  categoryId: categories;
+  price: number;
+  ingredients: string;
+  image: string;
+};
 
 export const UpdateFoodModal = ({
   foodItem,
@@ -32,15 +39,13 @@ export const UpdateFoodModal = ({
 UpdateFoodModalType) => {
   const { _id, price, foodName, ingredients, image, categoryId } = foodItem;
 
-
-  const [updateFood, setUpdateFood] = useState<FoodInfo>({
+  const [updateFood, setUpdateFood] = useState<FoodFormFields>({
     foodName: foodName,
     categoryId: categoryId,
     price: price,
     ingredients: ingredients,
     image: image,
   }); //default utgiin anh baisan buyu uurchluhiiin umnuh utgaar uguhgui bol 1 zuiliig uurchluhad bugdeerei hooson bolood baina.
-
 
   const handleUpdateFood = async () => {
     const { foodName, price, ingredients, image, categoryId } = updateFood;
@@ -53,13 +58,13 @@ UpdateFoodModalType) => {
         categoryId,
       });
 
-      if(response.ok){
-        toast.success("Food updated successfully.")
+      if (response.ok) {
+        toast.success("Food updated successfully.");
       }
 
       const UpdateFood = await response.json();
 
-    //   onToggleModal();
+      //   onToggleModal();
     } catch (error) {
       console.log("Update food ERROR!");
     }
@@ -74,14 +79,14 @@ UpdateFoodModalType) => {
       if (response.ok) {
         toast.success(
           <p>
-            <b>Dish successfully deleted.</b> <br/>"Would you like to undo this
-            action?"{" "}
+            <b>Dish successfully deleted.</b> <br />
+            "Would you like to undo this action?"{" "}
           </p>
         );
       }
     } catch (error) {
       console.log("Delete food ERROR!");
-      toast.error("Error!")
+      toast.error("Error!");
     }
   };
 
@@ -203,7 +208,11 @@ UpdateFoodModalType) => {
             <div className="flex justify-between w-full">
               <div>
                 <DialogClose asChild>
-                  <Button variant="outline" className="border-red-600" onClick={handleDeleteFood}>
+                  <Button
+                    variant="outline"
+                    className="border-red-600"
+                    onClick={handleDeleteFood}
+                  >
                     <Trash className="text-red-600" />
                   </Button>
                 </DialogClose>
