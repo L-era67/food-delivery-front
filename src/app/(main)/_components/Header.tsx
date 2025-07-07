@@ -6,12 +6,14 @@ import { OrderSheetSuccessDialog } from "./order-sheet/OrderSheetSuccessDialog";
 import { UserToolbar } from "./header/UserToolbar";
 
 export const Header = () => {
+  
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   const openSidebar = () => {
     setOpen(true);
   };
+
   const closeSidebar = () => {
     setOpen(false);
   };
@@ -20,6 +22,7 @@ export const Header = () => {
     setModalOpen(true);
     setOpen(false);
   };
+
   const closeModal = () => {
     setModalOpen(false);
   };

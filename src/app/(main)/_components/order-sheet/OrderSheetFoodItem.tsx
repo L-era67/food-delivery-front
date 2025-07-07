@@ -24,9 +24,11 @@ export const OrderSheetFoodItem = ({
     setChangeQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
 
-
-
   const totalPrice = food?.price * changeQuantity;
+
+  // const deleteOrderSheetItem = () =>{
+  //   const deleteOrderItem = food.filter((item:any)=> item)
+  // }
 
   return (
     <>

@@ -17,7 +17,11 @@ type FoodCartContextType = {
     setFoodCart: Dispatch<SetStateAction<{food:foodWithCategories; quatity:number}[]>>;
 }
 
+
 export const foodCartContext = createContext<FoodCartContextType>({} as FoodCartContextType);
+
+console.log("food card context111:", foodCartContext);
+
 
 export default function FoodCartContextProvider({
   children,

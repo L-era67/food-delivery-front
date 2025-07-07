@@ -94,8 +94,6 @@ export const AddFoodModal = ({
     if (!event.target.files) return;
     setUploadedImage(event.target.files[0]);
   };
-
-  console.log("image value", uploadedImage);
   
 
   return (

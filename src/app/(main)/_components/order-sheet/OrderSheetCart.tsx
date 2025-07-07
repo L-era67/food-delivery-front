@@ -41,7 +41,7 @@ export const OrderSheetCart = () => {
   const renderFoodCard = () => {
     if (foodCart?.length) {
       return foodCart?.map((item) => {
-        console.log("item Cart", item);
+        // console.log("item Cart", item);
 
         return (
           <OrderSheetFoodItem

@@ -26,12 +26,12 @@ export const FoodDetailModal = ({
   isModalOpen,
   onToggleModal,
 }: FoodDetailModalProps) => {
-  
   const [quantity, setQuantity] = useState<number>(1);
   const { foodName, image, ingredients, price } = food;
 
-  const foodCart = useContext(foodCartContext);
-  const { setFoodCart } = foodCart;
+  const foodCarts = useContext(foodCartContext);
+
+  const { setFoodCart , foodCart} = foodCarts;
 
   const addQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -41,10 +41,9 @@ export const FoodDetailModal = ({
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
   console.log("setFoodCart", foodCart);
-  
 
   const handleAddToCart = () => {
-    setFoodCart([
+    setFoodCart([...foodCart,
       {
         food: food,
         quatity: quantity,
@@ -53,6 +52,24 @@ export const FoodDetailModal = ({
     setQuantity(1);
     onToggleModal();
   }; //ADD CARD DEER darsnaar (onToggleModal) & hariu butsaad quantity-g 1-s ehluulne Harin "X" btn quatity uurchluhgui
+
+  // const handleAddToCart = () => {
+  //   setFoodCart((prev) => [
+  //     ...prev,
+  //     {
+  //       food: food,
+  //       quatity: quantity,
+  //     },
+  //   ]);
+  //   setQuantity(1);
+  //   onToggleModal();
+  // };
+
+  console.log("food Cart CONTEXT NEMEH :", foodCart);
+
+ const detailTotalPrice = quantity * price;
+
+  //  console.log("food cart context222", foodCartContext);
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onToggleModal}>
@@ -94,7 +111,7 @@ export const FoodDetailModal = ({
                     Total price:
                   </p>
                   <div className="text-lg font-semibold text-[#09090B]">
-                    <p>{price}₮</p>
+                    <p>{detailTotalPrice}₮</p>
                   </div>
                 </div>
                 <div className="flex w-[121px] justify-around">
