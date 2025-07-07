@@ -8,8 +8,26 @@ import {
 
 import { SidebarDashLine } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { useContext, useState } from "react";
+import { foodCartContext } from "@/providers/FoodCart";
 
 export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
+  const { foodCart } = useContext(foodCartContext);
+  console.log("Payment order:", foodCart);
+
+  if (!foodCart.length) return;
+  const priceCalc = foodCart.map((foods) => {
+    return foods.food.price * foods.quatity;
+
+    // setTotal(priceCalc);
+  });
+
+  console.log("price CALC", priceCalc);
+
+  const totalPrice = priceCalc.reduce((acc, curr) => acc + curr, 0);
+  console.log("TOTAL PRICE FINAL", totalPrice); //yooooo order deeree quatity-g shuud oorchlohoor umnuh huuchin array quantity-g awaad bnooo er hereg algaa
+  
+
   return (
     <Card className="mt-6">
       <CardHeader className="p-4 ">
@@ -31,7 +49,7 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
 
         <div className="flex justify-between">
           <p className="text-[#71717A] font-light">Total</p>
-          <p className="font-bold">12₮</p>
+          <p className="font-bold">{totalPrice}₮</p>
         </div>
       </CardContent>
 
