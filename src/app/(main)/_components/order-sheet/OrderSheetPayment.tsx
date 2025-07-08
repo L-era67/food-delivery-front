@@ -17,7 +17,7 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
 
   if (!foodCart.length) return;
   const priceCalc = foodCart.map((foods) => {
-    return foods.food.price * foods.quatity;
+    return foods.food.price * foods.quantity;
 
     // setTotal(priceCalc);
   });
@@ -27,6 +27,7 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
   const totalPrice = priceCalc.reduce((acc, curr) => acc + curr, 0);
   console.log("TOTAL PRICE FINAL", totalPrice); //yooooo order deeree quatity-g shuud oorchlohoor umnuh huuchin array quantity-g awaad bnooo er hereg algaa
   
+
 
   return (
     <Card className="mt-6">

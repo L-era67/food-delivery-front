@@ -47,7 +47,7 @@ export const OrderSheetCart = () => {
           <OrderSheetFoodItem
             key={item.food._id}
             food={item.food}
-            quantity={item?.quatity}
+            quantity={item?.quantity}
             // quantity={item?.foodOrderItems?.quantity}
             //  key={item?foodOrderItems?.food._id}
             // food={item?.foodOrderItems?.food}

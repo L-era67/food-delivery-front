@@ -30,7 +30,7 @@ export const OrderSheetContents = ({
       </TabsContent>
 
       <TabsContent value="order" className="h-full">
-        <OrderSheetOrders />
+        <OrderSheetOrders /> 
       </TabsContent>
       
     </Tabs>

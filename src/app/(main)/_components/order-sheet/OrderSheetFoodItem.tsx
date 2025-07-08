@@ -1,10 +1,11 @@
 import { SidebarDashLine } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
+import { foodCartContext } from "@/providers/FoodCart";
 
 import { CircleX, Minus, Plus } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 type OrderSheetFoodItematype = {
   food: foodWithCategories;
@@ -16,6 +17,22 @@ export const OrderSheetFoodItem = ({
   quantity,
 }: OrderSheetFoodItematype) => {
   const [changeQuantity, setChangeQuantity] = useState<number>(quantity);
+
+  const { foodCart, setFoodCart } = useContext(foodCartContext);
+
+  console.log("foodCart ITEM:", foodCart);
+
+  // const changeFoodcart = foodCart.map((foods) => {
+  //   if (changeQuantity === foods.quantity) return;
+  //   if (foods.food._id === food._id) {
+  //     setFoodCart([{ ...foods, quantity: changeQuantity }]);
+  //     // setFoodCart([...foodCart,{ food:food, quantity: changeQuantity }]);
+  //   } else {
+  //     return;
+  //   }
+  // });
+
+  // console.log("CHANGE FOOD CART QUANTITY:", changeFoodcart);
 
   const addQuantity = () => {
     setChangeQuantity((prev) => prev + 1);
@@ -30,7 +47,9 @@ export const OrderSheetFoodItem = ({
   //   const deleteOrderItem = food.filter((item:any)=> item)
   // }
 
-  
+  // const deleteOrderItem = foodCart.filter((item) => item?.food?._id !== food?._id);
+
+  // console.log("deleteOrderItem", deleteOrderItem);
 
   return (
     <>
@@ -53,12 +72,15 @@ export const OrderSheetFoodItem = ({
                 <p className="text-xs font-light">{food.ingredients}</p>
               </div>
             </div>
-            <CircleX
-              strokeWidth={0.5}
-              size={50}
-              color="red"
-              className="cursor-pointer"
-            />
+            <button>
+              {" "}
+              <CircleX
+                strokeWidth={0.5}
+                size={50}
+                color="red"
+                className="cursor-pointer"
+              />
+            </button>
           </div>
 
           <div className="flex items-center justify-between">
