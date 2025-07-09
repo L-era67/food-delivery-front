@@ -5,7 +5,7 @@ import { foodCartContext } from "@/providers/FoodCart";
 
 import { CircleX, Minus, Plus } from "lucide-react";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 type OrderSheetFoodItematype = {
   food: foodWithCategories;
@@ -33,6 +33,24 @@ export const OrderSheetFoodItem = ({
   // });
 
   // console.log("CHANGE FOOD CART QUANTITY:", changeFoodcart);
+
+  const changeFoodcart = () =>
+    foodCart.map((change) => {
+      if (change.quantity === changeQuantity) return;
+      if (change.food._id === food._id) {
+        // setFoodCart((prev) => [
+        //   ...prev,
+        //   { food: food, quantity: changeQuantity },
+        // ]); //ZOGSOLTGUI DAWTAJ BAINA MAP DOTOR SET FUNCCTION-G DUUDAH ERSELTEI BAIH NI!!!!
+        return change;
+      } else {
+        return;
+      }
+    });
+
+  useEffect(() => {
+    changeFoodcart();
+  }, []);
 
   const addQuantity = () => {
     setChangeQuantity((prev) => prev + 1);
@@ -104,3 +122,16 @@ export const OrderSheetFoodItem = ({
     </>
   );
 };
+
+
+
+// useEffect(() => {
+//   // quantity өөрчлөгдөх үед foodCart доторх тухайн item-ийг шинэчлэх
+//   setFoodCart((prevCart) =>
+//     prevCart.map((item) =>
+//       item.food._id === food._id
+//         ? { ...item, quantity: changeQuantity }
+//         : item
+//     )
+//   );
+// }, [changeQuantity]);
