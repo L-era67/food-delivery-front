@@ -13,7 +13,7 @@ import { foodCartContext } from "@/providers/FoodCart";
 
 export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
   const { foodCart } = useContext(foodCartContext);
-  console.log("Payment order:", foodCart);
+  // console.log("Payment order:", foodCart);
 
   if (!foodCart.length) return;
   const priceCalc = foodCart.map((foods) => {
@@ -22,10 +22,10 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
     // setTotal(priceCalc);
   });
 
-  console.log("price CALC", priceCalc);
+  // console.log("price CALC", priceCalc);
 
   const totalPrice = priceCalc.reduce((acc, curr) => acc + curr, 0);
-  console.log("TOTAL PRICE FINAL", totalPrice); //yooooo order deeree quatity-g shuud oorchlohoor umnuh huuchin array quantity-g awaad bnooo er hereg algaa
+  // console.log("TOTAL PRICE FINAL", totalPrice); //yooooo order deeree quatity-g shuud oorchlohoor umnuh huuchin array quantity-g awaad bnooo er hereg algaa
   
 
 

@@ -18,38 +18,53 @@ import {
 //   setFoodCart: (foodCart: [{ foodName: "Test1"; price: 100; quatity: 4 }]) => {},
 // });
 
-type FoodCartContextType = {
-  foodCart: { food: foodWithCategories; quantity: number }[];
-  setFoodCart: Dispatch<
-    SetStateAction<{ food: foodWithCategories; quantity: number }[]>
-  >;
-};
-
-type FoodCartType = {
+type foodWithQuantityType = {
   food: foodWithCategories;
   quantity: number;
-}[];
+};
+
+type FoodCartContextType = {
+  foodCart: foodWithQuantityType[];
+  // setFoodCart: Dispatch<SetStateAction<foodWithQuantityType[]>>;
+  addToCart:(_food:foodWithQuantityType)=>void;
+  removeFromCart:(_foodId:string) => void;
+};
+
+
 
 export const foodCartContext = createContext<FoodCartContextType>(
   {} as FoodCartContextType
 );
-
-console.log("food card context111:", foodCartContext);
 
 export default function FoodCartContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // const [foodCart, setFoodCart] = useState<
-  //   { food: foodWithCategories; quantity: number }[]
-  // >([]);
 
-  const [foodCart, setFoodCart] = useState<FoodCartType>([]);
+
+  const [foodCart, setFoodCart] = useState<foodWithQuantityType[]>([]);
+
+  const addToCart = (food:foodWithQuantityType) =>{
+    console.log("add buttun foodCart:", food);
+    
+    
+    setFoodCart([...foodCart, food])
+  }
+
+  const removeFromCart = (foodId:string) =>{
+    console.log("REMOVER FOOD CART ID", foodId);
+
+    const filteredFood = foodCart.filter((food)=> food.food._id !== foodId)
+    console.log("USTAGAGDSAN FOODS FILTER:", filteredFood);
+    setFoodCart(filteredFood)
+    
+    
+  }
 
   useEffect(() => {
     const cartItems = localStorage.getItem("foodCart");
-    console.log(cartItems);
+    // console.log(cartItems);
 
     if (cartItems) setFoodCart(JSON.parse(cartItems) || []);
   }, []);
@@ -59,7 +74,7 @@ export default function FoodCartContextProvider({
   }, [foodCart]);
 
   return (
-    <foodCartContext.Provider value={{ foodCart, setFoodCart }}>
+    <foodCartContext.Provider value={{ foodCart, addToCart, removeFromCart}}>
       {children}
     </foodCartContext.Provider>
   );

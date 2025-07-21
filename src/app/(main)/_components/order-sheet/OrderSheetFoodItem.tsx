@@ -16,9 +16,10 @@ export const OrderSheetFoodItem = ({
   food,
   quantity,
 }: OrderSheetFoodItematype) => {
+  
   const [changeQuantity, setChangeQuantity] = useState<number>(quantity);
 
-  const { foodCart, setFoodCart } = useContext(foodCartContext);
+  const { foodCart, removeFromCart} = useContext(foodCartContext);
 
   console.log("foodCart ITEM:", foodCart);
 
@@ -34,23 +35,23 @@ export const OrderSheetFoodItem = ({
 
   // console.log("CHANGE FOOD CART QUANTITY:", changeFoodcart);
 
-  const changeFoodcart = () =>
-    foodCart.map((change) => {
-      if (change.quantity === changeQuantity) return;
-      if (change.food._id === food._id) {
-        // setFoodCart((prev) => [
-        //   ...prev,
-        //   { food: food, quantity: changeQuantity },
-        // ]); //ZOGSOLTGUI DAWTAJ BAINA MAP DOTOR SET FUNCCTION-G DUUDAH ERSELTEI BAIH NI!!!!
-        return change;
-      } else {
-        return;
-      }
-    });
+  // const changeFoodcart = () =>
+  //   foodCart.map((change) => {
+  //     if (change.quantity === changeQuantity) return;
+  //     if (change.food._id === food._id) {
+  //       // setFoodCart((prev) => [
+  //       //   ...prev,
+  //       //   { food: food, quantity: changeQuantity },
+  //       // ]); //ZOGSOLTGUI DAWTAJ BAINA MAP DOTOR SET FUNCCTION-G DUUDAH ERSELTEI BAIH NI!!!!
+  //       return change;
+  //     } else {
+  //       return;
+  //     }
+  //   });
 
-  useEffect(() => {
-    changeFoodcart();
-  }, []);
+  // useEffect(() => {
+  //   changeFoodcart();
+  // }, []);
 
   const addQuantity = () => {
     setChangeQuantity((prev) => prev + 1);
@@ -90,7 +91,7 @@ export const OrderSheetFoodItem = ({
                 <p className="text-xs font-light">{food.ingredients}</p>
               </div>
             </div>
-            <button>
+            <button onClick={()=> removeFromCart(food._id)}>
               {" "}
               <CircleX
                 strokeWidth={0.5}

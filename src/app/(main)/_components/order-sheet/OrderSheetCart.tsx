@@ -2,14 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OrderSheetEmptyCard } from "./OrderSheetEmptyCard";
 import { OrderSheetFoodItem } from "./OrderSheetFoodItem";
 
-import { useContext, useEffect, useState } from "react";
-import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
+import { useContext } from "react";
 import { foodCartContext } from "@/providers/FoodCart";
-
-type cartDataType = {
-  food: foodWithCategories;
-  quantity: number;
-};
 
 // export const cartData = [
 //   {
@@ -40,7 +34,7 @@ export const OrderSheetCart = () => {
 
   const renderFoodCard = () => {
     if (foodCart?.length) {
-      return foodCart?.map((item) => {
+      return foodCart?.map((item) => {              
         // console.log("item Cart", item);
 
         return (
@@ -48,9 +42,6 @@ export const OrderSheetCart = () => {
             key={item.food._id}
             food={item.food}
             quantity={item?.quantity}
-            // quantity={item?.foodOrderItems?.quantity}
-            //  key={item?foodOrderItems?.food._id}
-            // food={item?.foodOrderItems?.food}
           />
         );
       });

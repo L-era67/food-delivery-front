@@ -14,6 +14,7 @@ import {
 import { useContext, useState } from "react";
 import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
 import { foodCartContext } from "@/providers/FoodCart";
+import { add } from "date-fns";
 
 type FoodDetailModalProps = {
   food: foodWithCategories;
@@ -26,13 +27,14 @@ export const FoodDetailModal = ({
   isModalOpen,
   onToggleModal,
 }: FoodDetailModalProps) => {
-  const [quantity, setQuantity] = useState<number>(1);
   
+  const [quantity, setQuantity] = useState<number>(1);
+
   const { foodName, image, ingredients, price } = food;
 
   const foodCarts = useContext(foodCartContext);
 
-  const { setFoodCart, foodCart } = foodCarts;
+  const {  foodCart, addToCart } = foodCarts;
 
   const addQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -44,13 +46,14 @@ export const FoodDetailModal = ({
   console.log("setFoodCart", foodCart);
 
   const handleAddToCart = () => {
-    setFoodCart([
-      ...foodCart,
-      {
-        food: food,
-        quantity: quantity,
-      },
-    ]);
+    addToCart({food, quantity})
+    // setFoodCart([
+    //   ...foodCart,
+    //   {
+    //     food: food,
+    //     quantity: quantity,
+    //   },
+    // ]);
     setQuantity(1);
     onToggleModal();
   }; //ADD CARD DEER darsnaar (onToggleModal) & hariu butsaad quantity-g 1-s ehluulne Harin "X" btn quatity uurchluhgui
@@ -67,7 +70,7 @@ export const FoodDetailModal = ({
   //   onToggleModal();
   // };
 
-  console.log("food Cart CONTEXT NEMEH :", foodCart);
+  // console.log("food Cart CONTEXT NEMEH :", foodCart);
 
   const detailTotalPrice = quantity * price;
 
