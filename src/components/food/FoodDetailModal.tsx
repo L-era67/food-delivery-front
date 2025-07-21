@@ -27,6 +27,7 @@ export const FoodDetailModal = ({
   isModalOpen,
   onToggleModal,
 }: FoodDetailModalProps) => {
+
   
   const [quantity, setQuantity] = useState<number>(1);
 
@@ -36,6 +37,13 @@ export const FoodDetailModal = ({
 
   const {  foodCart, addToCart } = foodCarts;
 
+  const [quantity, setQuantity] = useState<number>(1);
+  const { foodName, image, ingredients, price } = food;
+
+  const foodCarts = useContext(foodCartContext);
+  const { setFoodCart, foodCart } = foodCarts;
+
+
   const addQuantity = () => {
     setQuantity((prev) => prev + 1);
   };
@@ -43,9 +51,10 @@ export const FoodDetailModal = ({
   const subtractQuantity = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
-  console.log("setFoodCart", foodCart);
+  // console.log("setFoodCart", foodCart);
 
   const handleAddToCart = () => {
+
     addToCart({food, quantity})
     // setFoodCart([
     //   ...foodCart,
@@ -54,6 +63,63 @@ export const FoodDetailModal = ({
     //     quantity: quantity,
     //   },
     // ]);
+
+    setFoodCart((foodCart) => {
+      console.log("anhnii foodcart----", foodCart);
+
+      const exist = foodCart.find((foods) => foods.food._id === food._id);
+
+      if (exist) {
+        const filteredFoods = foodCart.filter(
+          (foods) => foods.food._id !== food._id
+        );
+        console.log("food CART ADD OR DEL:", filteredFoods);
+        
+
+        return [
+          ...filteredFoods,
+          {
+            food,
+            quantity:exist.quantity+1,
+          },
+        ];
+      }
+
+      return [
+        ...foodCart,
+        {
+          food,
+          quantity,
+        },
+      ];
+
+      //  const filteredFood= foodCart.filter((foods)=>foods.food._id===food._id)
+      // const filteredFood = foodCart.filter((foods) => {
+      //   if (foods.food._id === food._id) {
+      //     return;
+      //     // return {
+      //     //   ...foods,
+      //     //   quantity: foods.quantity + 1,
+      //     // };
+      //   } else {
+      //     return [
+      //       ...foodCart,
+      //       {
+      //         food: food,
+      //         quantity: quantity,
+      //       },
+      //     ];
+      //   }
+      // });
+      // // if(filteredFood.includes(food._id)){
+      // //   return []
+      // // }
+
+      // console.log("filteredFood", filteredFood);
+
+      // console.log("DETAIL FOOD CART:", foodCart);
+    });
+
     setQuantity(1);
     onToggleModal();
   }; //ADD CARD DEER darsnaar (onToggleModal) & hariu butsaad quantity-g 1-s ehluulne Harin "X" btn quatity uurchluhgui
@@ -70,8 +136,11 @@ export const FoodDetailModal = ({
   //   onToggleModal();
   // };
 
+<<<<<<< HEAD
   // console.log("food Cart CONTEXT NEMEH :", foodCart);
 
+=======
+>>>>>>> b95addd (Hrggui uurchlult)
   const detailTotalPrice = quantity * price;
 
   //  console.log("food cart context222", foodCartContext);

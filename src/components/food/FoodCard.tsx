@@ -16,8 +16,8 @@ type FoodCardType = {
 export const FoodCard = ({ food }: FoodCardType) => {
   const { foodName, price, ingredients, image } = food;
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);//FOOD  DETAIL DIALOG-G GADNAAS CONTROLLDOH HESEG
+  const [showAlert, setShowAlert] = useState<boolean>(false);// ADD CART BTN DARAH GARCH IREH ALERT
 
   const onToggleModal = () => {
     setIsModalOpen(!isModalOpen);

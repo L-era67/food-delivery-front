@@ -18,7 +18,17 @@ import {
 //   setFoodCart: (foodCart: [{ foodName: "Test1"; price: 100; quatity: 4 }]) => {},
 // });
 
+
 type foodWithQuantityType = {
+
+// type FoodCartContextType = {
+//   foodCart: { food: foodWithCategories; quantity: number }[];
+//   setFoodCart: Dispatch<
+//     SetStateAction<{ food: foodWithCategories; quantity: number }[]>
+//   >;
+// };
+
+type FoodCartType = {
   food: foodWithCategories;
   quantity: number;
 };
@@ -32,9 +42,14 @@ type FoodCartContextType = {
 
 
 
+type FoodCartContextType = {
+  foodCart: FoodCartType;
+  setFoodCart: Dispatch<SetStateAction<FoodCartType>>;
+};
+
 export const foodCartContext = createContext<FoodCartContextType>(
   {} as FoodCartContextType
-);
+); //{} as FoodContextType "type" BISH anhnii utga ni
 
 export default function FoodCartContextProvider({
   children,

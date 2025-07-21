@@ -29,7 +29,7 @@ export const OrderSheetContents = ({
         <OrderSheetPayment openModal={openModal} />
       </TabsContent>
 
-      <TabsContent value="order" className="h-full">
+      <TabsContent value="order" className="h-full">  
         <OrderSheetOrders /> 
       </TabsContent>
       

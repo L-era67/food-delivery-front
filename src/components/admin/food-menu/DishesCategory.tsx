@@ -20,6 +20,7 @@ export const DishesCategory = () => {
   };
   console.log("<--DISHES-CATEGORIES-->", categories);
 
+  
   useEffect(() => {
     getCategories();
   }, []);

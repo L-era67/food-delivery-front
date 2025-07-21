@@ -3,8 +3,19 @@ import { OrderSheetEmptyCard } from "./OrderSheetEmptyCard";
 import { OrderSheetFoodItem } from "./OrderSheetFoodItem";
 
 import { useContext } from "react";
+<<<<<<< HEAD
 import { foodCartContext } from "@/providers/FoodCart";
 
+=======
+import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
+import { foodCartContext } from "@/providers/FoodCart";
+
+// type cartDataType = {
+//   food: foodWithCategories;
+//   quantity: number;
+// };
+
+>>>>>>> b95addd (Hrggui uurchlult)
 // export const cartData = [
 //   {
 //     food: {
@@ -25,6 +36,7 @@ import { foodCartContext } from "@/providers/FoodCart";
 // ];
 
 export const OrderSheetCart = () => {
+  
   // const [cartData, setCartData] = useState<cartDataType[]>([]);
 
   const { foodCart } = useContext(foodCartContext);
