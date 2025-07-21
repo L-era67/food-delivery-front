@@ -1,85 +1,69 @@
 "use client";
 
 import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useEffect, useState } from "react";
 
-// export const foodCartContext = createContext({
-//   foodCart: [{
-//     foodName: "Test1",
-//     price: 100,
-//     quatity: 4,
-//   }],
-//   setFoodCart: (foodCart: [{ foodName: "Test1"; price: 100; quatity: 4 }]) => {},
-// });
-
-
+//TYPE--------------------------------------------------------------------------------------
 type foodWithQuantityType = {
-
-// type FoodCartContextType = {
-//   foodCart: { food: foodWithCategories; quantity: number }[];
-//   setFoodCart: Dispatch<
-//     SetStateAction<{ food: foodWithCategories; quantity: number }[]>
-//   >;
-// };
-
-type FoodCartType = {
   food: foodWithCategories;
   quantity: number;
 };
 
-type FoodCartContextType = {
+type foodCartContextType = {
   foodCart: foodWithQuantityType[];
-  // setFoodCart: Dispatch<SetStateAction<foodWithQuantityType[]>>;
-  addToCart:(_food:foodWithQuantityType)=>void;
-  removeFromCart:(_foodId:string) => void;
+  addToCart: (_food: foodWithQuantityType) => void;
+  removeFromFoodCart: (_foodId: string) => void;
 };
 
+//CREATE CONTEXT-----------------------------------------------------------------------------
+export const foodCartContext = createContext<foodCartContextType>(
+  {} as foodCartContextType
+);
 
-
-type FoodCartContextType = {
-  foodCart: FoodCartType;
-  setFoodCart: Dispatch<SetStateAction<FoodCartType>>;
-};
-
-export const foodCartContext = createContext<FoodCartContextType>(
-  {} as FoodCartContextType
-); //{} as FoodContextType "type" BISH anhnii utga ni
-
-export default function FoodCartContextProvider({
+//-------------------------------------------------------------------------------------------
+export default function foodCartContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
-
   const [foodCart, setFoodCart] = useState<foodWithQuantityType[]>([]);
 
-  const addToCart = (food:foodWithQuantityType) =>{
-    console.log("add buttun foodCart:", food);
-    
-    
-    setFoodCart([...foodCart, food])
-  }
+  // ADDTOCART -------------------------------------------------------------------------------
+  const addToCart = (food: foodWithQuantityType) => {
+    // console.log("EXIST PREV DATA:", food);
 
-  const removeFromCart = (foodId:string) =>{
-    console.log("REMOVER FOOD CART ID", foodId);
+    const existingFood = foodCart.filter(
+      (item) => item.food._id === food.food._id
+    );
+    // console.log("FILTERED exisFOOD:::::", existingFood);
 
-    const filteredFood = foodCart.filter((food)=> food.food._id !== foodId)
-    console.log("USTAGAGDSAN FOODS FILTER:", filteredFood);
-    setFoodCart(filteredFood)
-    
-    
-  }
+    if (existingFood.length > 0) {
+      const updatedFood = foodCart.filter(
+        (item) => item.food._id !== food.food._id
+      );
+      // console.log("updatedFood", updatedFood);
+      setFoodCart([
+        ...updatedFood,
+        { food: food.food, quantity: existingFood[0].quantity + food.quantity },
+      ]);
+    } else {
+      setFoodCart([...foodCart, food]);
+    }
+  };
 
+  //REMOVE -----------------------------------------------------------------------------------
+  const removeFromFoodCart = (foodId: string) => {
+    console.log("DELETE FOOD ID:", foodId);
+    const deleteUpdatedFood = foodCart.filter(
+      (item) => item.food._id !== foodId
+    );
+    console.log("deleteUpdatedFood", deleteUpdatedFood);
+    setFoodCart(deleteUpdatedFood);
+  };
+
+  //LOCAL STORAGE-----------------------------------------------------------------------------
   useEffect(() => {
     const cartItems = localStorage.getItem("foodCart");
-    // console.log(cartItems);
 
     if (cartItems) setFoodCart(JSON.parse(cartItems) || []);
   }, []);
@@ -89,7 +73,9 @@ export default function FoodCartContextProvider({
   }, [foodCart]);
 
   return (
-    <foodCartContext.Provider value={{ foodCart, addToCart, removeFromCart}}>
+    <foodCartContext.Provider
+      value={{ addToCart, foodCart, removeFromFoodCart }}
+    >
       {children}
     </foodCartContext.Provider>
   );

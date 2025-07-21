@@ -19,7 +19,7 @@ export const OrderSheetFoodItem = ({
   
   const [changeQuantity, setChangeQuantity] = useState<number>(quantity);
 
-  const { foodCart, removeFromCart} = useContext(foodCartContext);
+  const { foodCart, removeFromFoodCart} = useContext(foodCartContext);
 
   console.log("foodCart ITEM:", foodCart);
 
@@ -91,7 +91,7 @@ export const OrderSheetFoodItem = ({
                 <p className="text-xs font-light">{food.ingredients}</p>
               </div>
             </div>
-            <button onClick={()=> removeFromCart(food._id)}>
+            <button onClick={()=> removeFromFoodCart(food._id)}>
               {" "}
               <CircleX
                 strokeWidth={0.5}

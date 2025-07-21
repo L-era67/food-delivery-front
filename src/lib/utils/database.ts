@@ -3,7 +3,7 @@ export const database = async (
   method: string = "GET",
   body: any = null
 ) => {
-  const response = await fetch(`http://localhost:4200/${path}`, {
+  const response = await fetch(`http://localhost:4000/${path}`, {
     method: method,
     body: body ? JSON.stringify(body) : null,
     headers: {
