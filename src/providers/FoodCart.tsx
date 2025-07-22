@@ -3,24 +3,23 @@
 import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
 import { createContext, useEffect, useState } from "react";
 
-//TYPE--------------------------------------------------------------------------------------
 type foodWithQuantityType = {
   food: foodWithCategories;
   quantity: number;
+  totalPrice: number;
 };
 
 type foodCartContextType = {
   foodCart: foodWithQuantityType[];
   addToCart: (_food: foodWithQuantityType) => void;
   removeFromFoodCart: (_foodId: string) => void;
+  increamentFoodQuantity: (_foodId: string) => void;
 };
 
-//CREATE CONTEXT-----------------------------------------------------------------------------
 export const foodCartContext = createContext<foodCartContextType>(
   {} as foodCartContextType
 );
 
-//-------------------------------------------------------------------------------------------
 export default function foodCartContextProvider({
   children,
 }: {
@@ -28,30 +27,46 @@ export default function foodCartContextProvider({
 }) {
   const [foodCart, setFoodCart] = useState<foodWithQuantityType[]>([]);
 
-  // ADDTOCART -------------------------------------------------------------------------------
-  const addToCart = (food: foodWithQuantityType) => {
-    // console.log("EXIST PREV DATA:", food);
+  const addToCart = (newFood: foodWithQuantityType) => {
+    console.log("newFood", newFood);
 
-    const existingFood = foodCart.filter(
-      (item) => item.food._id === food.food._id
+    const existingFood = foodCart.find(
+      (item) => item.food._id === newFood.food._id
     );
-    // console.log("FILTERED exisFOOD:::::", existingFood);
 
-    if (existingFood.length > 0) {
-      const updatedFood = foodCart.filter(
-        (item) => item.food._id !== food.food._id
-      );
-      // console.log("updatedFood", updatedFood);
-      setFoodCart([
-        ...updatedFood,
-        { food: food.food, quantity: existingFood[0].quantity + food.quantity },
-      ]);
+    console.log("existingFood:", existingFood);
+
+    if (existingFood) {
+      const updatedFood = updatedFoodCart(foodCart, newFood);
+      console.log("FINAL UPDATED FOOD:", updatedFood);
+
+      setFoodCart(updatedFood);
     } else {
-      setFoodCart([...foodCart, food]);
+      setFoodCart([...foodCart, newFood]);
     }
   };
+  console.log("UPDATED FOOD CART UPDATE:", foodCart);
 
-  //REMOVE -----------------------------------------------------------------------------------
+  const increamentFoodQuantity = (foodId: string) => {
+    const updateIncrement = foodCart.map((item) => {
+      if (item.food._id === foodId) {
+        return {
+          food: item.food,
+          quantity: item.quantity + 1,
+          totalPrice: item.quantity * Number(item.food.price),
+        };
+      } else {
+        return {
+          food: item.food,
+          quantity: item.quantity,
+          totalPrice: item.totalPrice,
+        };
+      }
+    });
+
+    setFoodCart(updateIncrement);
+  };
+
   const removeFromFoodCart = (foodId: string) => {
     console.log("DELETE FOOD ID:", foodId);
     const deleteUpdatedFood = foodCart.filter(
@@ -61,7 +76,6 @@ export default function foodCartContextProvider({
     setFoodCart(deleteUpdatedFood);
   };
 
-  //LOCAL STORAGE-----------------------------------------------------------------------------
   useEffect(() => {
     const cartItems = localStorage.getItem("foodCart");
 
@@ -74,9 +88,37 @@ export default function foodCartContextProvider({
 
   return (
     <foodCartContext.Provider
-      value={{ addToCart, foodCart, removeFromFoodCart }}
+      value={{
+        addToCart,
+        foodCart,
+        removeFromFoodCart,
+        increamentFoodQuantity,
+      }}
     >
       {children}
     </foodCartContext.Provider>
   );
 }
+
+const updatedFoodCart = (
+  foodCart: foodWithQuantityType[],
+  newFood: foodWithQuantityType
+) => {
+  const updatedFood = foodCart.map((item) => {
+    if (item.food._id === newFood.food._id) {
+      // console.log("DUPLICATE:", item);
+      return {
+        food: item.food,
+        quantity: item.quantity + newFood.quantity,
+        totalPrice: item.quantity * Number(newFood.food.price),
+      };
+    } else {
+      return {
+        food: item.food,
+        quantity: item.quantity,
+        totalPrice: item.totalPrice,
+      };
+    }
+  });
+  return updatedFood;
+};

@@ -49,6 +49,7 @@ export const OrderSheetCart = () => {
             key={item.food._id}
             food={item.food}
             quantity={item?.quantity}
+            totalPrice={item?.totalPrice}
           />
         );
       });

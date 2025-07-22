@@ -15,11 +15,12 @@ type OrderSheetFoodItematype = {
 export const OrderSheetFoodItem = ({
   food,
   quantity,
+  
 }: OrderSheetFoodItematype) => {
   
   const [changeQuantity, setChangeQuantity] = useState<number>(quantity);
 
-  const { foodCart, removeFromFoodCart} = useContext(foodCartContext);
+  const { foodCart, removeFromFoodCart, increamentFoodQuantity} = useContext(foodCartContext);
 
   console.log("foodCart ITEM:", foodCart);
 
@@ -53,14 +54,14 @@ export const OrderSheetFoodItem = ({
   //   changeFoodcart();
   // }, []);
 
-  const addQuantity = () => {
-    setChangeQuantity((prev) => prev + 1);
-  };
-  const subtractQuantity = () => {
-    setChangeQuantity((prev) => (prev > 1 ? prev - 1 : prev));
-  };
+  // const addQuantity = () => {
+  //   setChangeQuantity((prev) => prev + 1);
+  // };
+  // const subtractQuantity = () => {
+  //   setChangeQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+  // };
 
-  const totalPrice = food?.price * changeQuantity;
+  // const totalPrice = food?.price * changeQuantity;
 
   // const deleteOrderSheetItem = () =>{
   //   const deleteOrderItem = food.filter((item:any)=> item)
@@ -110,7 +111,7 @@ export const OrderSheetFoodItem = ({
 
               <div className="text-lg font-semibold">{changeQuantity}</div>
 
-              <Button variant="ghost" onClick={addQuantity}>
+              <Button variant="ghost" onClick={()=>increamentFoodQuantity(food._id)}>
                 <Plus />
               </Button>
             </div>

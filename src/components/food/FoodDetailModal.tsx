@@ -15,7 +15,6 @@ import { useContext, useState } from "react";
 import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
 import { foodCartContext } from "@/providers/FoodCart";
 
-
 type FoodDetailModalProps = {
   food: foodWithCategories;
   isModalOpen: boolean;
@@ -30,8 +29,7 @@ export const FoodDetailModal = ({
   const [quantity, setQuantity] = useState<number>(1);
   const { foodName, image, ingredients, price } = food;
 
-  const {addToCart} = useContext(foodCartContext)
-
+  const { addToCart } = useContext(foodCartContext);
 
   const addQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -42,8 +40,9 @@ export const FoodDetailModal = ({
   };
   // console.log("setFoodCart", foodCart);
 
+  const detailTotalPrice = quantity * price;
   const handleAddToCart = () => {
-    addToCart({food, quantity})
+    addToCart({ food, quantity, totalPrice: quantity * Number(price)});
     setQuantity(1);
     onToggleModal();
   }; //ADD CARD DEER darsnaar (onToggleModal) & hariu butsaad quantity-g 1-s ehluulne Harin "X" btn quatity uurchluhgui
@@ -59,8 +58,6 @@ export const FoodDetailModal = ({
   //   setQuantity(1);
   //   onToggleModal();
   // };
-
-  const detailTotalPrice = quantity * price;
 
   //  console.log("food cart context222", foodCartContext);
 
