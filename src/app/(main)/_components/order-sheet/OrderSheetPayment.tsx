@@ -12,10 +12,12 @@ import { useContext, useState } from "react";
 import { foodCartContext } from "@/providers/FoodCart";
 
 export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
+
   const { foodCart } = useContext(foodCartContext);
   // console.log("Payment order:", foodCart);
 
   if (!foodCart.length) return;
+  
   const priceCalc = foodCart.map((foods) => {
     return foods.food.price * foods.quantity;
 
@@ -38,7 +40,7 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
       <CardContent className="p-4">
         <div className="flex justify-between">
           <p className="text-[#71717A] font-light">Items</p>
-          <p className="font-bold">12₮</p>
+          <p className="font-bold">{totalPrice}₮</p>
         </div>
 
         <div className="flex justify-between">

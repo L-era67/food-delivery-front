@@ -14,6 +14,7 @@ type foodCartContextType = {
   addToCart: (_food: foodWithQuantityType) => void;
   removeFromFoodCart: (_foodId: string) => void;
   increamentFoodQuantity: (_foodId: string) => void;
+  decreamentFoodQuantity: (_foodId: string) => void;
 };
 
 export const foodCartContext = createContext<foodCartContextType>(
@@ -53,7 +54,7 @@ export default function foodCartContextProvider({
         return {
           food: item.food,
           quantity: item.quantity + 1,
-          totalPrice: item.quantity * Number(item.food.price),
+          totalPrice: (item.quantity + 1) * Number(item.food.price),
         };
       } else {
         return {
@@ -67,12 +68,42 @@ export default function foodCartContextProvider({
     setFoodCart(updateIncrement);
   };
 
+  const decreamentFoodQuantity = (foodId: string) => {
+    const udpatedDecreament = foodCart
+      .map(({ food, quantity, totalPrice }) => {
+        if (food._id === foodId) {
+          const newQuantity = quantity - 1;
+          if (newQuantity <= 0) return null;
+          // if (quantity <= 0) return null;
+          return {
+            food,
+            quantity: newQuantity,
+            totalPrice: newQuantity * Number(food.price),
+            // quantity: quantity < 2 ? 1 : quantity-1,
+            // quantity: quantity > 1 ? quantity - 1 : 1,
+            // totalPrice: (quantity > 1 ? quantity - 1 : 1) * Number(food.price),
+          };
+        }
+        return {
+          food,
+          quantity,
+          totalPrice,
+        };
+      })
+      .filter((item) => item !== null); //.Boolean(null) ugtaa false utga
+
+    // const filteredFoodCart = udpatedDecreament.filter((item) => item !== null);
+
+    console.log("udpatedDecreament", udpatedDecreament);
+
+    setFoodCart(udpatedDecreament);
+  };
+
   const removeFromFoodCart = (foodId: string) => {
-    console.log("DELETE FOOD ID:", foodId);
     const deleteUpdatedFood = foodCart.filter(
       (item) => item.food._id !== foodId
     );
-    console.log("deleteUpdatedFood", deleteUpdatedFood);
+
     setFoodCart(deleteUpdatedFood);
   };
 
@@ -93,6 +124,7 @@ export default function foodCartContextProvider({
         foodCart,
         removeFromFoodCart,
         increamentFoodQuantity,
+        decreamentFoodQuantity,
       }}
     >
       {children}
@@ -110,13 +142,14 @@ const updatedFoodCart = (
       return {
         food: item.food,
         quantity: item.quantity + newFood.quantity,
-        totalPrice: item.quantity * Number(newFood.food.price),
+        totalPrice:
+          (item.quantity + newFood.quantity) * Number(newFood.food.price),
       };
     } else {
       return {
         food: item.food,
         quantity: item.quantity,
-        totalPrice: item.totalPrice,
+        totalPrice: Number(item.food.price) * item.quantity,
       };
     }
   });

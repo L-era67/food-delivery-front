@@ -10,17 +10,20 @@ import { useContext, useEffect, useState } from "react";
 type OrderSheetFoodItematype = {
   food: foodWithCategories;
   quantity: number;
+  totalPrice: number;
 };
 
 export const OrderSheetFoodItem = ({
   food,
   quantity,
-  
+  totalPrice,
 }: OrderSheetFoodItematype) => {
-  
-  const [changeQuantity, setChangeQuantity] = useState<number>(quantity);
-
-  const { foodCart, removeFromFoodCart, increamentFoodQuantity} = useContext(foodCartContext);
+  const {
+    foodCart,
+    removeFromFoodCart,
+    increamentFoodQuantity,
+    decreamentFoodQuantity,
+  } = useContext(foodCartContext);
 
   console.log("foodCart ITEM:", foodCart);
 
@@ -92,7 +95,7 @@ export const OrderSheetFoodItem = ({
                 <p className="text-xs font-light">{food.ingredients}</p>
               </div>
             </div>
-            <button onClick={()=> removeFromFoodCart(food._id)}>
+            <button onClick={() => removeFromFoodCart(food._id)}>
               {" "}
               <CircleX
                 strokeWidth={0.5}
@@ -105,13 +108,19 @@ export const OrderSheetFoodItem = ({
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <Button variant="ghost" onClick={subtractQuantity}>
+              <Button
+                variant="ghost"
+                onClick={() => decreamentFoodQuantity(food._id)}
+              >
                 <Minus />
               </Button>
 
-              <div className="text-lg font-semibold">{changeQuantity}</div>
+              <div className="text-lg font-semibold">{quantity}</div>
 
-              <Button variant="ghost" onClick={()=>increamentFoodQuantity(food._id)}>
+              <Button
+                variant="ghost"
+                onClick={() => increamentFoodQuantity(food._id)}
+              >
                 <Plus />
               </Button>
             </div>
@@ -124,8 +133,6 @@ export const OrderSheetFoodItem = ({
     </>
   );
 };
-
-
 
 // useEffect(() => {
 //   // quantity өөрчлөгдөх үед foodCart доторх тухайн item-ийг шинэчлэх
