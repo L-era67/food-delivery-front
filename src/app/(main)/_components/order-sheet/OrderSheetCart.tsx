@@ -35,7 +35,7 @@ export const OrderSheetCart = () => {
   // const [cartData, setCartData] = useState<cartDataType[]>([]);
 
   const { foodCart } = useContext(foodCartContext);
-  console.log("foodcart:", foodCart);
+
 
   // setCartData(foodCartText?.foodCart);
 

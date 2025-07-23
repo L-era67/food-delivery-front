@@ -25,54 +25,7 @@ export const OrderSheetFoodItem = ({
     decreamentFoodQuantity,
   } = useContext(foodCartContext);
 
-  console.log("foodCart ITEM:", foodCart);
 
-  // const changeFoodcart = foodCart.map((foods) => {
-  //   if (changeQuantity === foods.quantity) return;
-  //   if (foods.food._id === food._id) {
-  //     setFoodCart([{ ...foods, quantity: changeQuantity }]);
-  //     // setFoodCart([...foodCart,{ food:food, quantity: changeQuantity }]);
-  //   } else {
-  //     return;
-  //   }
-  // });
-
-  // console.log("CHANGE FOOD CART QUANTITY:", changeFoodcart);
-
-  // const changeFoodcart = () =>
-  //   foodCart.map((change) => {
-  //     if (change.quantity === changeQuantity) return;
-  //     if (change.food._id === food._id) {
-  //       // setFoodCart((prev) => [
-  //       //   ...prev,
-  //       //   { food: food, quantity: changeQuantity },
-  //       // ]); //ZOGSOLTGUI DAWTAJ BAINA MAP DOTOR SET FUNCCTION-G DUUDAH ERSELTEI BAIH NI!!!!
-  //       return change;
-  //     } else {
-  //       return;
-  //     }
-  //   });
-
-  // useEffect(() => {
-  //   changeFoodcart();
-  // }, []);
-
-  // const addQuantity = () => {
-  //   setChangeQuantity((prev) => prev + 1);
-  // };
-  // const subtractQuantity = () => {
-  //   setChangeQuantity((prev) => (prev > 1 ? prev - 1 : prev));
-  // };
-
-  // const totalPrice = food?.price * changeQuantity;
-
-  // const deleteOrderSheetItem = () =>{
-  //   const deleteOrderItem = food.filter((item:any)=> item)
-  // }
-
-  // const deleteOrderItem = foodCart.filter((item) => item?.food?._id !== food?._id);
-
-  // console.log("deleteOrderItem", deleteOrderItem);
 
   return (
     <>

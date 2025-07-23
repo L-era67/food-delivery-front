@@ -6,8 +6,6 @@ import {
 } from "@/components/ui/sheet";
 import { ShoppingCart } from "lucide-react";
 import { OrderSheetContents } from ".";
-import { useContext } from "react";
-import FoodCartContextProvider, { foodCartContext } from "@/providers/FoodCart";
 
 type OrderSheetProps = {
   open: boolean;
@@ -21,8 +19,6 @@ export const OrderSheet = ({
   openModal,
 }: OrderSheetProps) => {
   
-  // const foodCartText = useContext(foodCartContext);
-  // console.log("foodCart Provider", foodCartText);
 
   return (
     <Sheet open={open} onOpenChange={closeSidebar}>

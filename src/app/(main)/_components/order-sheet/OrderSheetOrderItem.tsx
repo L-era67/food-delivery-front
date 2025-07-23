@@ -1,28 +1,34 @@
 import { Badge } from "@/components/ui/badge";
 import { Map, Soup, Timer } from "lucide-react";
+import { orderDataType } from "./OrderSheetOrders";
 
-export const OrderSheetOrderItem = () => {
+export const OrderSheetOrderItem = (props: orderDataType) => {
+  console.log("orderFood ITEM:", props);
+
   return (
     <div className="space-y-3">
       <div className="flex item-center justify-between">
-        <h4 className="font-bold">$26.97 (#20156)</h4>
+        <h4 className="font-bold">{props.totalPrice}₮ (#20156)</h4>
 
         <Badge variant="outline" className="border-red-500 rounded-full">
-          Delivered
+          {props.status}
         </Badge>
       </div>
-
-      <div className="flex item-center justify-between">
-        <div className="flex item-center gap-2">
-          <Soup strokeWidth={1} size={16} />
-          <p className="text-muted-foreground text-xs">Sunshine Stackers</p>
+      {props?.foodOrderItems.map((items) => (
+        <div className="flex item-center justify-between" >
+          <div className="flex item-center gap-2">
+            <Soup strokeWidth={1} size={16} />
+            <p className="text-muted-foreground text-xs">
+              {items.food.foodName}
+            </p>
+          </div>
+          <p className="text-muted-foreground text-xs">x {items.quantity}</p>
         </div>
-        <p className="text-muted-foreground text-xs">x 1</p>
-      </div>
+      ))}
 
       <div className="flex item-center gap-2">
         <Timer strokeWidth={1} size={16} />
-        <p className="text-muted-foreground text-xs">2024/12/24</p>
+        <p className="text-muted-foreground text-xs">{props.createdAt}</p>
       </div>
 
       <div className="flex item-center gap-2">

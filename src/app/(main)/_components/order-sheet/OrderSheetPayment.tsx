@@ -14,29 +14,26 @@ import { database } from "@/lib/utils/database";
 
 export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
   const { foodCart } = useContext(foodCartContext);
-  // console.log("Payment order:", foodCart);
+  console.log("Payment order:", foodCart);
 
   if (!foodCart.length) return;
 
-  const priceCalc = foodCart.map((foods) => {
+  const priceCalculate = foodCart.map((foods) => {
     return foods.food.price * foods.quantity;
-
-    // setTotal(priceCalc);
   });
 
   // console.log("price CALC", priceCalc);
 
-  const totalPrice = priceCalc.reduce((acc, curr) => acc + curr, 0);
-  // console.log("TOTAL PRICE FINAL", totalPrice); //yooooo order deeree quatity-g shuud oorchlohoor umnuh huuchin array quantity-g awaad bnooo er hereg algaa
+  const totalPrice = priceCalculate.reduce((acc, curr) => acc + curr, 0);
 
   const handleCreateOrder = async () => {
     const response = await database("food-order", "POST", {
       foodOrderItems: foodCart,
-      totalPrice: priceCalc,
-      userId: "68805b924d989dd3a3f6cb3e"
+      totalPrice: totalPrice,
+      userId: "68805b924d989dd3a3f6cb3e",
     });
     const data = await response.json();
-    console.log("dta:", data)
+    console.log("handleCreateOrderBY-USER-ID:", data);
   };
 
   return (

@@ -38,14 +38,14 @@ export const FoodDetailModal = ({
   const subtractQuantity = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
-  // console.log("setFoodCart", foodCart);
+
 
   const detailTotalPrice = quantity * price;
   const handleAddToCart = () => {
     addToCart({ food, quantity, totalPrice: quantity * price});
     setQuantity(1);
     onToggleModal();
-  }; //ADD CARD DEER darsnaar (onToggleModal) & hariu butsaad quantity-g 1-s ehluulne Harin "X" btn quatity uurchluhgui
+  }; 
 
   // const handleAddToCart = () => {
   //   setFoodCart((prev) => [
@@ -59,7 +59,6 @@ export const FoodDetailModal = ({
   //   onToggleModal();
   // };
 
-  //  console.log("food cart context222", foodCartContext);
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onToggleModal}>

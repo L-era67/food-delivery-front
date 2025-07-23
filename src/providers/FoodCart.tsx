@@ -29,13 +29,10 @@ export default function foodCartContextProvider({
   const [foodCart, setFoodCart] = useState<foodWithQuantityType[]>([]);
 
   const addToCart = (newFood: foodWithQuantityType) => {
-    console.log("newFood", newFood);
 
     const existingFood = foodCart.find(
       (item) => item.food._id === newFood.food._id
     );
-
-    console.log("existingFood:", existingFood);
 
     if (existingFood) {
       const updatedFood = updatedFoodCart(foodCart, newFood);
@@ -46,7 +43,6 @@ export default function foodCartContextProvider({
       setFoodCart([...foodCart, newFood]);
     }
   };
-  console.log("UPDATED FOOD CART UPDATE:", foodCart);
 
   const increamentFoodQuantity = (foodId: string) => {
     const updateIncrement = foodCart.map((item) => {
@@ -94,7 +90,6 @@ export default function foodCartContextProvider({
 
     // const filteredFoodCart = udpatedDecreament.filter((item) => item !== null);
 
-    console.log("udpatedDecreament", udpatedDecreament);
 
     setFoodCart(udpatedDecreament);
   };
