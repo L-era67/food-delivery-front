@@ -10,14 +10,14 @@ import { SidebarDashLine } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
 import { foodCartContext } from "@/providers/FoodCart";
+import { database } from "@/lib/utils/database";
 
 export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
-
   const { foodCart } = useContext(foodCartContext);
   // console.log("Payment order:", foodCart);
 
   if (!foodCart.length) return;
-  
+
   const priceCalc = foodCart.map((foods) => {
     return foods.food.price * foods.quantity;
 
@@ -28,8 +28,16 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
 
   const totalPrice = priceCalc.reduce((acc, curr) => acc + curr, 0);
   // console.log("TOTAL PRICE FINAL", totalPrice); //yooooo order deeree quatity-g shuud oorchlohoor umnuh huuchin array quantity-g awaad bnooo er hereg algaa
-  
 
+  const handleCreateOrder = async () => {
+    const response = await database("food-order", "POST", {
+      foodOrderItems: foodCart,
+      totalPrice: priceCalc,
+      userId: "68805b924d989dd3a3f6cb3e"
+    });
+    const data = await response.json();
+    console.log("dta:", data)
+  };
 
   return (
     <Card className="mt-6">
@@ -57,7 +65,11 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
       </CardContent>
 
       <CardFooter className="p-4">
-        <Button size="lg" className="w-full bg-red-500 rounded-full">
+        <Button
+          size="lg"
+          className="w-full bg-red-500 rounded-full"
+          onClick={handleCreateOrder}
+        >
           Checkout
         </Button>
       </CardFooter>

@@ -104,7 +104,7 @@ export default function foodCartContextProvider({
       (item) => item.food._id !== foodId
     );
 
-    setFoodCart(deleteUpdatedFood);
+    setFoodCart(deleteUpdatedFood);                        
   };
 
   useEffect(() => {
@@ -150,7 +150,7 @@ const updatedFoodCart = (
         food: item.food,
         quantity: item.quantity,
         totalPrice: Number(item.food.price) * item.quantity,
-      };
+       };
     }
   });
   return updatedFood;

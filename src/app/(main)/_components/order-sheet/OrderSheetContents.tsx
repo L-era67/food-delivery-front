@@ -1,3 +1,4 @@
+"use client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { OrderSheetCart, OrderSheetOrders, OrderSheetPayment } from ".";
 
@@ -7,8 +8,8 @@ export const OrderSheetContents = ({
   openModal: () => void;
 }) => {
   return (
-    <Tabs defaultValue="cart" className="space-y-6 h-full">
-      <TabsList className="w-full rounded-full mt-6">
+    <Tabs defaultValue="cart" className="h-full space-y-6">
+      <TabsList className="w-full mt-6 rounded-full">
         <TabsTrigger
           value="cart"
           className="w-full rounded-full data-[state=active]:bg-[#EF4444] data-[state=active]:text-white"

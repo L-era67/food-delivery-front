@@ -42,7 +42,7 @@ export const FoodDetailModal = ({
 
   const detailTotalPrice = quantity * price;
   const handleAddToCart = () => {
-    addToCart({ food, quantity, totalPrice: quantity * Number(price)});
+    addToCart({ food, quantity, totalPrice: quantity * price});
     setQuantity(1);
     onToggleModal();
   }; //ADD CARD DEER darsnaar (onToggleModal) & hariu butsaad quantity-g 1-s ehluulne Harin "X" btn quatity uurchluhgui
