@@ -49,7 +49,6 @@ export const AddFoodModal = ({
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    console.log(name, value);
 
     setFoodInfo((prevFoodInfo) => ({
       ...prevFoodInfo,
@@ -72,7 +71,6 @@ export const AddFoodModal = ({
       });
 
       const data = await response.json();
-      console.log("data:", data);
 
       if (!response.ok) {
         toast.error("ERROR!");

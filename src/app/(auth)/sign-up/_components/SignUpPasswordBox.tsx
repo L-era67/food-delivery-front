@@ -28,7 +28,7 @@ type PasswordBoxProps = {
 const PasswordSchema = Yup.object({
   password: Yup.string().required("hooson baina"),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), undefined], "Zuw bicheechee")
+    .oneOf([Yup.ref("password"), undefined], "Passwords must match")
     .required(),
 });
 
@@ -36,16 +36,16 @@ const handleSignUp = async (email: string, password: string) => {
   const response = await database("user", "POST", {
     email,
     password,
-    phoneNumber: "4444",
+    phoneNumber: "7777",
     address: "han-uul",
   });
   console.log("create user", response);
-  
 };
 
 export const SignUpPasswordBox = ({ handleBack, email }: PasswordBoxProps) => {
-const router = useRouter();
-  
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -54,12 +54,14 @@ const router = useRouter();
     validationSchema: PasswordSchema,
     onSubmit: async (values) => {
       try {
+        setLoading(true);
         await handleSignUp(email, values.password);
         console.log(values);
         router.push("/login");
       } catch (error) {
         console.log("try again");
       }
+      setLoading(false);
     },
   });
 
@@ -113,7 +115,7 @@ const router = useRouter();
               </div>
             </div>
           </div>
-          <FooterButtons buttonText="Let`s Go" />
+          <FooterButtons buttonDisable={loading} buttonText="Let`s Go" />
         </form>
       </CardContent>
 

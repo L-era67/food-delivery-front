@@ -27,8 +27,6 @@ export const AdminFoodsSection = () => {
   const [foodWithCategories, setFoodWithCategories] = useState<CategoryIdWithFoods[]>(
     []
   );
-  console.log("food id:", foodWithCategories);
-  
 
   useEffect(() => {
     const getAdminFoods = async () => {
@@ -36,7 +34,6 @@ export const AdminFoodsSection = () => {
       const response = await database("food/getFoodsWithCategories");
       const data = await response.json();
       setFoodWithCategories(data.response);
-      console.log("admin cat:", data.response);
 
     };
 

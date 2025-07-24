@@ -12,15 +12,10 @@ export const DishesCategory = () => {
   const getCategories = async () => {
     const response = await database("food/getFoodsWithCategories");
     const data = await response.json();
-
-    console.log("GET CATEGORIES:", data);
-
     setCategories(data.response);
     return data;
   };
-  console.log("<--DISHES-CATEGORIES-->", categories);
 
-  
   useEffect(() => {
     getCategories();
   }, []);
@@ -36,7 +31,6 @@ export const DishesCategory = () => {
 
   return (
     <div className="flex flex-col gap-4 p-6 bg-background rounded-xl">
-      
       <p className="text-xl font-semibold">Dishes category</p>
 
       <div className="flex flex-wrap gap-3">

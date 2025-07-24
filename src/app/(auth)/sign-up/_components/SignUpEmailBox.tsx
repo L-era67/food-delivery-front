@@ -24,11 +24,6 @@ const EmailSchema = Yup.object({
 });
 
 export const SignUpEmailBox = ({
-  // values,
-  // errors,
-  // touched,
-  // handleChange,
-  // handleBlur,
   handleNext,
   onChangeEmail,
 }: EmailBoxProps) => {
