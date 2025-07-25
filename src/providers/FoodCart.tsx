@@ -15,6 +15,7 @@ type foodCartContextType = {
   removeFromFoodCart: (_foodId: string) => void;
   increamentFoodQuantity: (_foodId: string) => void;
   decreamentFoodQuantity: (_foodId: string) => void;
+  clearFoodCart:() =>void;
 };
 
 export const foodCartContext = createContext<foodCartContextType>(
@@ -102,6 +103,10 @@ export default function foodCartContextProvider({
     setFoodCart(deleteUpdatedFood);                        
   };
 
+  const clearFoodCart = () =>{
+    setFoodCart([]);
+  }
+
   useEffect(() => {
     const cartItems = localStorage.getItem("foodCart");
 
@@ -120,6 +125,7 @@ export default function foodCartContextProvider({
         removeFromFoodCart,
         increamentFoodQuantity,
         decreamentFoodQuantity,
+        clearFoodCart
       }}
     >
       {children}

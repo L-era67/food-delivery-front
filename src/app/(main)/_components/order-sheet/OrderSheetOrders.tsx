@@ -5,6 +5,7 @@ import { OrderSheetOrderItem } from ".";
 import { database } from "@/lib/utils/database";
 import { useEffect, useState } from "react";
 import { foodWithCategories } from "@/lib/types/Types-Categories-Food";
+import { useUser } from "@/providers/userProvider";
 
 // {
 //     "_id": "6880dc57154b4898d5716e95",
@@ -69,10 +70,11 @@ type orderResponseType = {
 
 export const OrderSheetOrders = () => {
   const [orderData, setOrderData] = useState<orderDataType[]>([]);
+  const {user} = useUser();
 
   useEffect(() => {
     const getOrderByUserId = async () => {
-      const response = await database("food-order/68805b924d989dd3a3f6cb3e");
+      const response = await database(`food-order/${user._id}`);
 
       const data = (await response.json()) as orderResponseType;
 

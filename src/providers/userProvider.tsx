@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { userDetailType } from "@/lib/types/Types-Categories-Food";
+import { createContext, useContext, useEffect, useState } from "react";
 import { string } from "yup";
 
 type userType = {
@@ -9,14 +10,18 @@ type userType = {
   email: string;
 };
 
-export const userProvider = createContext({} as userType);
+type userSetType = {
+  user:userDetailType,
+}
+
+export const userContext = createContext({} as userSetType);
 
 export default function UserContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState({} as userType);
+  const [user, setUser] = useState({} as userDetailType);
 
   const getCurrentUserByAccessToken = async (accessToken: string) => {
     try {
@@ -27,17 +32,19 @@ export default function UserContextProvider({
             Authorization: `Bearer ${accessToken}`,
           },
         }
-      );
-      console.log("response:", response);
+      ) ;
+      // console.log("response:", response);
       const data = await response.json();
 
-      console.log("data user", data);
+      console.log("data user", data.user);
+      // setUser(response)
 
-      //   setUser(data.userData)
+        setUser(data?.user)
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   useEffect(() => {
     // const accessToken =
@@ -53,10 +60,12 @@ export default function UserContextProvider({
   }, []);
 
   return (
-    <userProvider.Provider
-      value={{ userId: "string", role: "string", email: "string" }}
+    <userContext.Provider
+      value={{ user }}
     >
       {children}
-    </userProvider.Provider>
+    </userContext.Provider>
   );
 }
+
+export const useUser = () =>useContext(userContext);

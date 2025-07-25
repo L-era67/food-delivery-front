@@ -27,6 +27,7 @@ export const SignUpEmailBox = ({
   handleNext,
   onChangeEmail,
 }: EmailBoxProps) => {
+  
   const formik = useFormik({
     initialValues: {
       email: "",

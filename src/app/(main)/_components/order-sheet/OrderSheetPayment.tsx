@@ -11,10 +11,14 @@ import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
 import { foodCartContext } from "@/providers/FoodCart";
 import { database } from "@/lib/utils/database";
+import { useUser } from "@/providers/userProvider";
 
 export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
-  const { foodCart } = useContext(foodCartContext);
+  const { foodCart, clearFoodCart } = useContext(foodCartContext);
   console.log("Payment order:", foodCart);
+
+  const { user } = useUser();
+  console.log("USER ID FIRST: ", user._id);
 
   if (!foodCart.length) return;
 
@@ -26,14 +30,15 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
 
   const totalPrice = priceCalculate.reduce((acc, curr) => acc + curr, 0);
 
-  const handleCreateOrder = async () => {
+  const checkOutOrder = async () => {
     const response = await database("food-order", "POST", {
       foodOrderItems: foodCart,
       totalPrice: totalPrice,
-      userId: "68805b924d989dd3a3f6cb3e",
+      userId: `${user._id}`,
     });
     const data = await response.json();
     console.log("handleCreateOrderBY-USER-ID:", data);
+    clearFoodCart();
   };
 
   return (
@@ -65,7 +70,7 @@ export const OrderSheetPayment = ({ openModal }: { openModal: () => void }) => {
         <Button
           size="lg"
           className="w-full bg-red-500 rounded-full"
-          onClick={handleCreateOrder}
+          onClick={checkOutOrder}
         >
           Checkout
         </Button>
