@@ -2,7 +2,6 @@
 
 import { userDetailType } from "@/lib/types/Types-Categories-Food";
 import { createContext, useContext, useEffect, useState } from "react";
-import { string } from "yup";
 
 type userType = {
   userId: string;

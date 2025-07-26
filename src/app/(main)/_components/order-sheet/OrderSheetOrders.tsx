@@ -70,7 +70,7 @@ type orderResponseType = {
 
 export const OrderSheetOrders = () => {
   const [orderData, setOrderData] = useState<orderDataType[]>([]);
-  const {user} = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     const getOrderByUserId = async () => {
@@ -94,8 +94,8 @@ export const OrderSheetOrders = () => {
       </CardHeader>
 
       <CardContent className="p-4">
-        {orderData.map((orderFood: any) => (
-          <OrderSheetOrderItem key={orderFood._id} {...orderFood} />
+        {orderData.map((orderFood: orderDataType, i) => (
+          <OrderSheetOrderItem key={i} {...orderFood} />
         ))}
       </CardContent>
     </Card>

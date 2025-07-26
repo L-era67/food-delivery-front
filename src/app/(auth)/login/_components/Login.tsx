@@ -21,7 +21,7 @@ export const Login = () => {
   const { push } = useRouter();
 
 
-  const submitLogin = async (email: string, password: string) => {
+  const submitLogin = async (email: string, password: string)=> {
     const response = await axios.post<{ sucess: true; accessToken: string }>(
       "http://localhost:4000/user/login",
       {

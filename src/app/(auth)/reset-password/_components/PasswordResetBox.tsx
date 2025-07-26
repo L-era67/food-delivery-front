@@ -8,16 +8,57 @@ import { Card, CardContent } from "../../../../components/ui/card";
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { database } from "@/lib/utils/database";
 
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useEffect, useState } from "react";
+
+const resetPasswordSchema = Yup.object({
+  password: Yup.string().required(),
+});
+
 export const PasswordResetBox = () => {
   const { push } = useRouter();
+  const [token, setToken] = useState<string>("");
 
-  const handleResetPassword = async () => {
-    const response = await database("/user/reset-password", "POST", {
-      resetPassword: "000",
-      token:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM0MjEzMjYsInVzZXJEYXRhIjp7InVzZXJJZCI6IjY4ODJlMjhiN2M0MzFlNDk3MWU3ZmZjMiIsInJvbGUiOiJVc2VyIiwiZW1haWwiOiJ0ZXN0MkBnbWFpbC5jb20ifSwiaWF0IjoxNzUzNDE3NzI2fQ.42KhUk63kowyD7O1LZvPISDzLreumaxGKS9oHqSkFCA",
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setToken(savedToken);
+    }
+  }, []);
+  console.log("log:", token);
+
+  const handleResetPassword = async (password: string, token: string) => {
+    const response = await database("user/reset-password", "POST", {
+      password: password,
+      token: token,
     });
     console.log("RESET TOKEN", response);
+    push("/login");
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+    },
+    validationSchema: resetPasswordSchema,
+    onSubmit: async (values) => {
+      console.log("RESET PASSWORD:", values);
+      await handleResetPassword(values.password, token);
+    },
+  });
+
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+    formik;
+
+  const resetPassInputvalues = {
+    name: "password",
+    placeholder: "password",
+    value: values.password,
+    onChange: handleChange,
+    onBlur: handleBlur,
+    inputError: touched.password && errors.password,
+    inputErrorMessage: errors.password,
   };
 
   return (
@@ -28,11 +69,11 @@ export const PasswordResetBox = () => {
       />
 
       <CardContent className="p-0">
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="grid items-center w-full gap-6">
             <div className="flex flex-col space-y-1.5 gap-4">
-              {/* <FormInput />
-              <FormInput /> */}
+              <FormInput {...resetPassInputvalues} />
+              {/* <FormInput /> */}
 
               <div className="flex items-center space-x-2">
                 <Checkbox id="showPass" />

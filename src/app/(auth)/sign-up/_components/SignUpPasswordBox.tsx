@@ -26,7 +26,7 @@ type PasswordBoxProps = {
   email: string;
 };
 const PasswordSchema = Yup.object({
-  password: Yup.string().required("hooson baina"),
+  password: Yup.string().required("Нууц үгээ оруулна уу"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), undefined], "Passwords must match")
     .required(),
